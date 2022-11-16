@@ -1,0 +1,6 @@
+pluginManagement {
+    includeBuild '../plugin'
+}
+
+rootProject.name = 'Extractor-sandbox'
+include(":jvm")

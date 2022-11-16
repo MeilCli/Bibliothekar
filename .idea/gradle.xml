@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/Extractor/Gradle/plugin" name="Extractor">
+                <projects>
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/plugin" />
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/plugin/plugin" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/Extractor/Gradle/sandbox" name="Extractor-sandbox">
+                <projects>
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox" />
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="testRunner" value="GRADLE" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/plugin" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/plugin/plugin" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

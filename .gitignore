@@ -1,0 +1,7 @@
+# General
+build
+
+# Gradle
+.gradle
+local.properties
+

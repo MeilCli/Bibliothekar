@@ -1,0 +1,3 @@
+rootProject.name = 'Bibliothekar'
+includeBuild('/Extractor/Gradle/plugin')
+includeBuild('/Extractor/Gradle/sandbox')
