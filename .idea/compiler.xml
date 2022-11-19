@@ -6,6 +6,9 @@
       <module name="Bibliothekar.Extractor.Gradle.plugin.functionalTest" target="11" />
       <module name="Bibliothekar.Extractor.Gradle.plugin.main" target="11" />
       <module name="Bibliothekar.Extractor.Gradle.plugin.test" target="11" />
+      <module name="Extractor.functionalTest" target="11" />
+      <module name="Extractor.main" target="11" />
+      <module name="Extractor.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

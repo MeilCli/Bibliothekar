@@ -1,2 +1,3 @@
 rootProject.name = 'Extractor'
-include("plugin")
+include(":core")
+include(":jvm")

@@ -1,6 +1,6 @@
 plugins {
+    id 'java-gradle-plugin'
     id 'org.jetbrains.kotlin.jvm' version '1.7.20'
-    id 'net.meilcli.bibliothekar.extractor.plugin.jvm'
 }
 
 repositories {
@@ -10,6 +10,12 @@ repositories {
 dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom')
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    implementation project(':jvm-child')
-    implementation project(':jvm-nest:jvm-nested')
+}
+
+testing {
+    suites {
+        test {
+            useKotlinTest()
+        }
+    }
 }
