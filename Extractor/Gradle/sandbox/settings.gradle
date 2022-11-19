@@ -4,3 +4,5 @@ pluginManagement {
 
 rootProject.name = 'Extractor-sandbox'
 include(":jvm")
+include(":jvm-child")
+include(":jvm-nest:jvm-nested")

@@ -17,6 +17,9 @@
                 <projects>
                   <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm" />
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-child" />
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-nest" />
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-nest/jvm-nested" />
                 </projects>
               </build>
             </builds>
@@ -33,6 +36,9 @@
             <option value="$PROJECT_DIR$/Extractor/Gradle/plugin/plugin" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-child" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-nest" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-nest/jvm-nested" />
           </set>
         </option>
       </GradleProjectSettings>
