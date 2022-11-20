@@ -1,4 +1,9 @@
 pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+    }
     includeBuild '../plugin'
 }
 
@@ -7,3 +12,4 @@ include(":jvm")
 include(":jvm-child")
 include(":jvm-nest:jvm-nested")
 include(":android-library")
+include(":android-library-child")

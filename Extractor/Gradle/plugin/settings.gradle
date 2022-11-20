@@ -1,3 +1,4 @@
 rootProject.name = 'Extractor'
 include(":core")
 include(":jvm")
+include(":android")

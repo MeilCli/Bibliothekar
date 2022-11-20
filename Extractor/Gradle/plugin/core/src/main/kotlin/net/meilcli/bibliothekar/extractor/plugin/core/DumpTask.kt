@@ -63,8 +63,6 @@ open class DumpTask : DefaultTask() {
                             logger.warn("$moduleComponentIdentifier not handle ${artifacts.first().javaClass}")
                             return
                         }
-
-                        logger.warn("file: ${artifact.file}")
                     }
             }
     }

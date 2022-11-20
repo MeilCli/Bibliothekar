@@ -1,0 +1,53 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation project(':core')
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'com.android.tools.build:gradle:7.3.1'
+}
+
+testing {
+    suites {
+        test {
+            useKotlinTest()
+        }
+
+        functionalTest(JvmTestSuite) {
+            useKotlinTest()
+
+            dependencies {
+                implementation project
+            }
+
+            targets {
+                all {
+                    testTask.configure { shouldRunAfter(test) } 
+                }
+            }
+        }
+    }
+}
+
+gradlePlugin {
+    plugins {
+        greeting {
+            id = 'net.meilcli.bibliothekar.extractor.plugin.android'
+            implementationClass = 'net.meilcli.bibliothekar.extractor.plugin.android.BibliothekarPlugin'
+        }
+    }
+}
+
+gradlePlugin.testSourceSets(sourceSets.functionalTest)
+
+tasks.named('check') {
+    dependsOn(testing.suites.functionalTest)
+}
