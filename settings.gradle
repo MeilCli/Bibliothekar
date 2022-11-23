@@ -1,6 +1,16 @@
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
 rootProject.name = 'Bibliothekar'
 includeBuild('/Toolchain/Gradle/generator')
 includeBuild('/Toolchain/Gradle/dependencies')
 includeBuild('/Toolchain/Gradle/config')
 includeBuild('/Extractor/Gradle/plugin')
 includeBuild('/Extractor/Gradle/sandbox')
+
+// copy local.properties because android gradle plugin cannot find sdk location when composite build
+def localPropertiesFile = file("local.properties")
+if (localPropertiesFile.exists()) {
+    def extractorSandboxLocalPropertiesFile = file("Extractor/Gradle/sandbox/local.properties")
+    Files.copy(localPropertiesFile.toPath(), extractorSandboxLocalPropertiesFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
+}
