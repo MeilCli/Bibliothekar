@@ -1,0 +1,23 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
+}
+
+gradlePlugin {
+    plugins {
+        greeting {
+            id = 'net.meilcli.bibliothekar.toolchain.generator.dependencies'
+            implementationClass = 'net.meilcli.bibliothekar.toolchain.generator.dependencies.DependenciesGeneratorPlugin'
+        }
+    }
+}

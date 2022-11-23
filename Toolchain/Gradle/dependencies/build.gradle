@@ -1,0 +1,36 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+    id 'net.meilcli.bibliothekar.toolchain.generator.dependencies'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
+
+    library 'org.jetbrains.kotlin:kotlin-bom'
+    library 'org.jetbrains.kotlin:kotlin-gradle-plugin'
+    library 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    library 'com.android.tools.build:gradle:7.3.1'
+    library 'androidx.appcompat:appcompat:1.5.1'
+
+    library 'junit:junit:4.13.2'
+
+    library 'androidx.test.ext:junit:1.1.4'
+    library 'androidx.test.espresso:espresso-core:3.5.0'
+}
+
+gradlePlugin {
+    plugins {
+        greeting {
+            id = 'net.meilcli.bibliothekar.toolchain.dependencies'
+            implementationClass = 'net.meilcli.bibliothekar.toolchain.dependencies.DependenciesPlugin'
+        }
+    }
+}

@@ -1,0 +1,29 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'net.meilcli.bibliothekar.toolchain.dependencies'
+}
+
+import net.meilcli.bibliothekar.config.Dependencies
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation project(':core')
+    implementation platform(Dependencies.OrgJetbrainsKotlin.KotlinBom)
+    implementation Dependencies.OrgJetbrainsKotlin.KotlinGradlePlugin
+    implementation Dependencies.OrgJetbrainsKotlin.KotlinStdlibJdk8
+    implementation Dependencies.ComAndroidToolsBuild.Gradle
+}
+
+gradlePlugin {
+    plugins {
+        greeting {
+            id = 'net.meilcli.bibliothekar.toolchain.config.android-library'
+            implementationClass = 'net.meilcli.bibliothekar.toolchain.config.android.AndroidLibraryPlugin'
+        }
+    }
+}

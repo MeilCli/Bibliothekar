@@ -1,3 +1,13 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+    }
+    includeBuild '../../../Toolchain/Gradle/config'
+    includeBuild '../../../Toolchain/Gradle/dependencies'
+}
+
 rootProject.name = 'Extractor'
 include(":core")
 include(":jvm")

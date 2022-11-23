@@ -1,16 +1,11 @@
 plugins {
     id 'java-gradle-plugin'
-    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
-}
-
-repositories {
-    mavenCentral()
+    id 'org.jetbrains.kotlin.jvm'
+    id 'net.meilcli.bibliothekar.toolchain.config.kotlin'
 }
 
 dependencies {
     implementation project(':core')
-    implementation platform('org.jetbrains.kotlin:kotlin-bom')
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 }
 
 testing {

@@ -7,6 +7,25 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
+              <build path="$PROJECT_DIR$/Toolchain/Gradle/generator" name="Toolchain-generator">
+                <projects>
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/generator" />
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/generator/dependencies" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/Toolchain/Gradle/dependencies" name="Toolchain-dependencies">
+                <projects>
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/dependencies" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/Toolchain/Gradle/config" name="Toolchain-config">
+                <projects>
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/config" />
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/config/android" />
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/config/core" />
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/config/jvm" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/Extractor/Gradle/plugin" name="Extractor">
                 <projects>
                   <project path="$PROJECT_DIR$/Extractor/Gradle/plugin" />
@@ -47,6 +66,13 @@
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-child" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-nest" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm-nest/jvm-nested" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/config" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/config/android" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/config/core" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/config/jvm" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/dependencies" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/generator" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/generator/dependencies" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -4,6 +4,14 @@ pluginManagement {
         mavenCentral()
         google()
     }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "com.android.library") {
+                useModule("com.android.tools.build:gradle:${requested.version}")
+            }
+        }
+    }
+    includeBuild '../../../Toolchain/Gradle/config'
     includeBuild '../plugin'
 }
 
