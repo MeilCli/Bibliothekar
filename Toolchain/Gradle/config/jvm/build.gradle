@@ -1,6 +1,7 @@
 plugins {
     id 'java-gradle-plugin'
     id 'org.jetbrains.kotlin.jvm'
+    id 'io.gitlab.arturbosch.detekt'
     id 'net.meilcli.bibliothekar.toolchain.dependencies'
 }
 
@@ -23,4 +24,10 @@ gradlePlugin {
             implementationClass = 'net.meilcli.bibliothekar.toolchain.config.jvm.KotlinPlugin'
         }
     }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    config = files("../../../../detekt.yml")
+    basePath = file("../../../../")
 }

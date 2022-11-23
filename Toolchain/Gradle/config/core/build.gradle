@@ -1,6 +1,7 @@
 plugins {
     id 'java-gradle-plugin'
     id 'org.jetbrains.kotlin.jvm'
+    id 'io.gitlab.arturbosch.detekt'
     id 'net.meilcli.bibliothekar.toolchain.dependencies'
 }
 
@@ -13,8 +14,24 @@ repositories {
 dependencies {
     implementation platform(Dependencies.OrgJetbrainsKotlin.KotlinBom)
     implementation Dependencies.OrgJetbrainsKotlin.KotlinStdlibJdk8
+    implementation Dependencies.IoGitlabArturboschDetekt.DetektGradlePlugin
 }
 
 bibliothekarDependencies {
     includeSourceSets = true
+}
+
+gradlePlugin {
+    plugins {
+        greeting {
+            id = 'net.meilcli.bibliothekar.toolchain.config.detekt'
+            implementationClass = 'net.meilcli.bibliothekar.toolchain.config.core.DetektPlugin'
+        }
+    }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    config = files("../../../../detekt.yml")
+    basePath = file("../../../../")
 }

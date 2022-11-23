@@ -1,5 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+    id 'io.gitlab.arturbosch.detekt'
     id 'net.meilcli.bibliothekar.toolchain.config.kotlin'
+    id 'net.meilcli.bibliothekar.toolchain.config.detekt'
     id 'net.meilcli.bibliothekar.extractor.plugin.jvm'
 }

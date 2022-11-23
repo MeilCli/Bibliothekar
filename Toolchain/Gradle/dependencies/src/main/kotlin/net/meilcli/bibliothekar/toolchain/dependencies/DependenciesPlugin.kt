@@ -21,7 +21,8 @@ class DependenciesPlugin : Plugin<Project> {
                 .findByType(DependenciesExtension::class.java)
                 ?.apply {
                     if (includeSourceSets) {
-                        val outputDirectory = project.file("${project.buildDir}/generated/source/dependencies/main/net/meilcli/bibliothekar/config")
+                        val outputDirectoryPath = "${project.buildDir}/generated/source/dependencies/main/net/meilcli/bibliothekar/config"
+                        val outputDirectory = project.file(outputDirectoryPath)
                         if (outputDirectory.exists().not()) {
                             outputDirectory.mkdirs()
                         }

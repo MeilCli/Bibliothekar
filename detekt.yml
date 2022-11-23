@@ -1,0 +1,7 @@
+build:
+  maxIssues: 1000
+
+style:
+  MaxLineLength:
+    active: true
+    maxLineLength: 140

@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'io.gitlab.arturbosch.detekt'
     id 'net.meilcli.bibliothekar.toolchain.config.android-library'
+    id 'net.meilcli.bibliothekar.toolchain.config.detekt'
     id 'net.meilcli.bibliothekar.extractor.plugin.android'
 }
 

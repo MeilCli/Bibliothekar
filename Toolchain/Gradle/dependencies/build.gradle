@@ -1,6 +1,7 @@
 plugins {
     id 'java-gradle-plugin'
     id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+    id 'io.gitlab.arturbosch.detekt' version '1.22.0'
     id 'net.meilcli.bibliothekar.toolchain.generator.dependencies'
 }
 
@@ -16,6 +17,8 @@ dependencies {
     library 'org.jetbrains.kotlin:kotlin-bom'
     library 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     library 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    library 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0'
 
     library 'com.android.tools.build:gradle:7.3.1'
     library 'androidx.appcompat:appcompat:1.5.1'
@@ -33,4 +36,10 @@ gradlePlugin {
             implementationClass = 'net.meilcli.bibliothekar.toolchain.dependencies.DependenciesPlugin'
         }
     }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    config = files("../../../detekt.yml")
+    basePath = file("../../../")
 }

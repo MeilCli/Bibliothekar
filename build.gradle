@@ -1,0 +1,3 @@
+tasks.register("detekt") {
+    dependsOn gradle.includedBuilds*.task(":detekt")
+}
