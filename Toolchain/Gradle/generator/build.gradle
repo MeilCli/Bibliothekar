@@ -6,3 +6,7 @@ plugins {
 tasks.register("detekt") {
     dependsOn ':dependencies:detekt'
 }
+
+tasks.register("check") {
+    dependsOn ':dependencies:check'
+}

@@ -1,3 +1,7 @@
 tasks.register("detekt") {
     dependsOn gradle.includedBuilds*.task(":detekt")
 }
+
+tasks.register("check") {
+    dependsOn gradle.includedBuilds*.task(":check")
+}

@@ -8,3 +8,9 @@ tasks.register("detekt") {
     dependsOn ':jvm:detekt'
     dependsOn ':android:detekt'
 }
+
+tasks.register("check") {
+    dependsOn ':core:check'
+    dependsOn ':jvm:check'
+    dependsOn ':android:check'
+}
