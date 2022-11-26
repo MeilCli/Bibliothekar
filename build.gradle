@@ -1,5 +1,15 @@
-tasks.register("detekt") {
-    dependsOn gradle.includedBuilds*.task(":detekt")
+import io.gitlab.arturbosch.detekt.report.ReportMergeTask
+
+plugins {
+    id 'io.gitlab.arturbosch.detekt' version '1.22.0' apply false
+}
+
+tasks.register("detekt", ReportMergeTask) { mergeTask ->
+    mergeTask.output = project.layout.buildDirectory.file("reports/detekt/merge.xml")
+    gradle.includedBuilds.forEach { includeBuild ->
+        mergeTask.dependsOn includeBuild.task(":detekt")
+        mergeTask.input.from(new File(includeBuild.projectDir, "build/reports/detekt/merge.xml"))
+    }
 }
 
 tasks.register("check") {

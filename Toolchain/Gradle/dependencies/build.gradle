@@ -43,3 +43,10 @@ detekt {
     config = files("../../../detekt.yml")
     basePath = file("../../../")
 }
+
+tasks.named("detekt").configure {
+    reports {
+        // for root detekt task, its task extracts merge.xml
+        xml.outputLocation.set(file("build/reports/detekt/merge.xml"))
+    }
+}
