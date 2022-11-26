@@ -5,7 +5,13 @@ style:
     MaxLineLength:
         active: true
         maxLineLength: 140
+    UseOrEmpty:
+        active: false
 
 formatting:
     MaximumLineLength:
+        active: true
+        maxLineLength: 140
+    ArgumentListWrapping:
+        active: true
         maxLineLength: 140

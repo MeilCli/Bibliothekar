@@ -5,11 +5,15 @@ import org.gradle.api.JavaVersion
 
 object BaseExtensionApplier {
 
+    private const val compileSdkVersion = 32
+    private const val minSdkVersion = 21
+    private const val targetSdkVersion = 32
+
     fun apply(extension: BaseExtension) {
-        extension.compileSdkVersion(32)
+        extension.compileSdkVersion(compileSdkVersion)
         extension.defaultConfig {
-            it.minSdk = 21
-            it.targetSdk = 32
+            it.minSdk = minSdkVersion
+            it.targetSdk = targetSdkVersion
             it.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             it.consumerProguardFile("consumer-rules.pro")
         }
@@ -20,7 +24,7 @@ object BaseExtensionApplier {
                 "proguard-rules.pro"
             )
         }
-        extension.compileOptions{
+        extension.compileOptions {
             it.setSourceCompatibility(JavaVersion.VERSION_1_8)
             it.setTargetCompatibility(JavaVersion.VERSION_1_8)
         }

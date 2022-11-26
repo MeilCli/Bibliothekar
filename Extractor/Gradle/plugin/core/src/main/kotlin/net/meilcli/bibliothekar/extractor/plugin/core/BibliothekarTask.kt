@@ -10,6 +10,5 @@ open class BibliothekarTask : DefaultTask() {
 
     @TaskAction
     fun action() {
-
     }
 }

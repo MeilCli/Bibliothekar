@@ -6,6 +6,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 
+@Suppress("detekt.UnnecessaryAbstractClass")
 abstract class BasePlugin : Plugin<Project> {
 
     protected fun DependencyHandler.implementation(dependency: String) {

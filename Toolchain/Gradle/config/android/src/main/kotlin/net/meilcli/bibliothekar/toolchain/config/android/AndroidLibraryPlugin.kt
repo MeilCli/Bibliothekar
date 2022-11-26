@@ -15,9 +15,7 @@ class AndroidLibraryPlugin : BasePlugin() {
 
         project.extensions
             .findByType(LibraryExtension::class.java)
-            ?.apply {
-                BaseExtensionApplier.apply(this)
-            }
+            ?.let { BaseExtensionApplier.apply(it) }
         project.tasks
             .withType(KotlinCompile::class.java)
             .forEach {
