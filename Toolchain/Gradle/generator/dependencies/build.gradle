@@ -12,6 +12,8 @@ dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom')
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
+
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0"
 }
 
 gradlePlugin {

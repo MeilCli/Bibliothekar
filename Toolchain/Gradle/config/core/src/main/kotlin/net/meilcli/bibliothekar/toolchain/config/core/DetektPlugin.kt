@@ -1,6 +1,7 @@
 package net.meilcli.bibliothekar.toolchain.config.core
 
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import net.meilcli.bibliothekar.config.Dependencies
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File
@@ -16,6 +17,7 @@ class DetektPlugin : Plugin<Project> {
                 config = project.files(File(rootDir, "detekt.yml"))
                 basePath = rootDir.absolutePath
             }
+        project.dependencies.add("detektPlugins", Dependencies.IoGitlabArturboschDetekt.DetektFormatting)
     }
 
     // need rootDir but Project.rootDir is root of composite module

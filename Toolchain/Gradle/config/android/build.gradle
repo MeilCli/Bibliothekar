@@ -18,6 +18,8 @@ dependencies {
     implementation Dependencies.OrgJetbrainsKotlin.KotlinGradlePlugin
     implementation Dependencies.OrgJetbrainsKotlin.KotlinStdlibJdk8
     implementation Dependencies.ComAndroidToolsBuild.Gradle
+
+    detektPlugins Dependencies.IoGitlabArturboschDetekt.DetektFormatting
 }
 
 gradlePlugin {
