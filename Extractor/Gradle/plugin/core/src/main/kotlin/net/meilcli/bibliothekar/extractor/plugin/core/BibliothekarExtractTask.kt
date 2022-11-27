@@ -32,7 +32,7 @@ open class BibliothekarExtractTask : DefaultTask() {
 
     @TaskAction
     fun action() {
-        val configuration = configuration ?: throw IllegalStateException("configuration must be initialized")
+        val configuration = configuration ?: throw BibliothekarException("configuration must be initialized")
 
         logger.warn("hello DumpTask")
 
