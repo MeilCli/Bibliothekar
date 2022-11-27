@@ -1,5 +1,7 @@
 package net.meilcli.bibliothekar.extractor.plugin.core
 
+import net.meilcli.bibliothekar.extractor.plugin.core.dependencies.DependencyLoader
+import net.meilcli.bibliothekar.extractor.plugin.core.dependencies.IDependencyLoader
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.result.ResolvedArtifactResult
@@ -22,6 +24,8 @@ open class BibliothekarExtractTask : DefaultTask() {
 
     private val logger = LoggerFactory.getLogger(BibliothekarExtractTask::class.java)
 
+    private val dependencyLoader: IDependencyLoader = DependencyLoader()
+
     private var configuration: Configuration? = null
 
     fun setup(configuration: Configuration) {
@@ -35,6 +39,11 @@ open class BibliothekarExtractTask : DefaultTask() {
         val configuration = configuration ?: throw BibliothekarException("configuration must be initialized")
 
         logger.warn("hello DumpTask")
+
+        dependencyLoader.load(configuration)
+            .forEach {
+                logger.warn(it.toString())
+            }
 
         configuration.resolvedConfiguration
             .lenientConfiguration
