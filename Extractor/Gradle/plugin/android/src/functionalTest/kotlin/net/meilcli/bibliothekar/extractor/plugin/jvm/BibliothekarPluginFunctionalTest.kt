@@ -1,35 +1,48 @@
 package net.meilcli.bibliothekar.extractor.plugin.jvm
 
-import kotlin.test.assertTrue
-import kotlin.test.Test
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
+import org.junit.experimental.runners.Enclosed
 import org.junit.rules.TemporaryFolder
+import org.junit.runner.RunWith
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
+@RunWith(Enclosed::class)
 class BibliothekarPluginFunctionalTest {
 
-    @get:Rule
-    val tempFolder = TemporaryFolder()
+    class TestBibliothekarExtractTaskRegistration {
 
-    private fun getProjectDir() = tempFolder.root
-    private fun getBuildFile() = getProjectDir().resolve("build.gradle")
-    private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
+        @get:Rule
+        val tempFolder = TemporaryFolder()
 
-    @Test fun `can run task`() {
-        getSettingsFile().writeText("")
-        getBuildFile().writeText("""
-plugins {
-    id('net.meilcli.bibliothekar.extractor.plugin.android')
-}
-""")
+        private fun getProjectDir() = tempFolder.root
+        private fun getBuildFile() = getProjectDir().resolve("build.gradle")
+        private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
 
-        val runner = GradleRunner.create()
-        runner.forwardOutput()
-        runner.withPluginClasspath()
-        runner.withArguments("greeting")
-        runner.withProjectDir(getProjectDir())
-        val result = runner.build();
+        @Test
+        fun test() {
+            getSettingsFile().writeText("")
+            getBuildFile().writeText(
+                """
+                    plugins {
+                        id('net.meilcli.bibliothekar.extractor.plugin.android')
+                    }
+                    configurations.create("includingTest").setCanBeResolved(true)
+                    configurations.create("excludingTest").setCanBeResolved(false)
+                """.trimIndent()
+            )
 
-        assertTrue(result.output.contains("Hello from plugin 'net.meilcli.bibliothekar.extractor.plugin.android'"))
+            val runner = GradleRunner.create()
+            runner.forwardOutput()
+            runner.withPluginClasspath()
+            runner.withArguments("tasks")
+            runner.withProjectDir(getProjectDir())
+            val result = runner.build()
+
+            assertTrue(result.output.contains("includingTestBibliothekarExtract - extract includingTest dependencies"))
+            assertFalse(result.output.contains("excludingTestBibliothekarExtract - extract excludingTest dependencies"))
+        }
     }
 }

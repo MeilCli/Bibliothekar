@@ -11,13 +11,22 @@ import org.gradle.maven.MavenPomArtifact
 import org.slf4j.LoggerFactory
 
 // temp file
-open class DumpTask : DefaultTask() {
+open class BibliothekarExtractTask : DefaultTask() {
 
-    private val logger = LoggerFactory.getLogger(DumpTask::class.java)
+    companion object {
+
+        fun taskName(configuration: Configuration): String {
+            return "${configuration.name}BibliothekarExtract"
+        }
+    }
+
+    private val logger = LoggerFactory.getLogger(BibliothekarExtractTask::class.java)
 
     private var configuration: Configuration? = null
 
     fun setup(configuration: Configuration) {
+        this.group = "bibliothekar_extract"
+        this.description = "extract ${configuration.name} dependencies"
         this.configuration = configuration
     }
 

@@ -3,8 +3,8 @@ package net.meilcli.bibliothekar.extractor.plugin.android
 import com.android.build.api.variant.Variant
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.android.build.gradle.internal.plugins.LibraryPlugin
+import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarExtractTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarTask
-import net.meilcli.bibliothekar.extractor.plugin.core.DumpTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -16,25 +16,26 @@ class BibliothekarPlugin : Plugin<Project> {
     private val logger = LoggerFactory.getLogger(BibliothekarPlugin::class.java)
 
     override fun apply(project: Project) {
-        project.tasks.register("greeting") { task ->
-            task.doLast {
-                println("Hello from plugin 'net.meilcli.bibliothekar.extractor.plugin.android'")
-            }
-        }
-        project.configurations.forEach { configuration ->
-            if (configuration.isCanBeResolved) {
-                project.tasks.register("${configuration.name}Dump", DumpTask::class.java) { task ->
-                    task.group = "dump"
-                    task.setup(configuration)
-                }
-            }
-        }
+        project.setUpExtractTask()
+
         if (project.plugins.hasPlugin(LibraryPlugin::class.java)) {
             setupDumpWithLibraryPlugin(project)
         } else {
             project.plugins.whenPluginAdded {
                 if (it is LibraryPlugin) {
                     setupDumpWithLibraryPlugin(project)
+                }
+            }
+        }
+    }
+
+    private fun Project.setUpExtractTask() {
+        afterEvaluate {
+            configurations.forEach { configuration ->
+                if (configuration.isCanBeResolved) {
+                    project.tasks.register(BibliothekarExtractTask.taskName(configuration), BibliothekarExtractTask::class.java) { task ->
+                        task.setup(configuration)
+                    }
                 }
             }
         }
@@ -55,7 +56,7 @@ class BibliothekarPlugin : Plugin<Project> {
                     project.tasks
                         .register("${variant.name}Bibliothekar", BibliothekarTask::class.java) { task ->
                             task.group = "dump"
-                            task.dependsOn(dependencyConfigurations.map { "${it.name}Dump" })
+                            task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
 
                             dependencyProjects.forEach { dependencyProject ->
                                 if (dependencyProject.plugins.hasPlugin(LibraryPlugin::class.java) ||
