@@ -16,6 +16,8 @@ pluginManagement {
 }
 
 rootProject.name = 'Extractor-sandbox'
+
+includeBuild '../../../Toolchain/Gradle/detekt-rule'
 include(":jvm")
 include(":jvm-child")
 include(":jvm-nest:jvm-nested")

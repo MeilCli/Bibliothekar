@@ -1,0 +1,5 @@
+pluginManagement {
+    includeBuild '../dependencies'
+}
+
+rootProject.name = 'Toolchain-detekt-rule'

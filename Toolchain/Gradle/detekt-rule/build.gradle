@@ -1,0 +1,38 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+    id 'io.gitlab.arturbosch.detekt' version '1.22.0'
+    id 'net.meilcli.bibliothekar.toolchain.dependencies'
+}
+
+import net.meilcli.bibliothekar.config.Dependencies
+
+group "toolchain-detekt-rule"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(Dependencies.OrgJetbrainsKotlin.KotlinBom)
+    implementation Dependencies.OrgJetbrainsKotlin.KotlinStdlibJdk8
+    implementation Dependencies.IoGitlabArturboschDetekt.DetektApi
+
+    testImplementation Dependencies.IoGitlabArturboschDetekt.DetektTest
+    testImplementation Dependencies.Junit.Junit
+
+    detektPlugins Dependencies.IoGitlabArturboschDetekt.DetektFormatting
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    config = files("../../../detekt.yml")
+    basePath = file("../../../")
+}
+
+tasks.named("detekt").configure {
+    reports {
+        // for root detekt task, its task extracts merge.xml
+        xml.outputLocation.set(file("build/reports/detekt/merge.xml"))
+    }
+}

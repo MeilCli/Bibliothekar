@@ -18,6 +18,11 @@
                   <project path="$PROJECT_DIR$/Toolchain/Gradle/dependencies" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/Toolchain/Gradle/detekt-rule" name="Toolchain-detekt-rule">
+                <projects>
+                  <project path="$PROJECT_DIR$/Toolchain/Gradle/detekt-rule" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/Toolchain/Gradle/config" name="Toolchain-config">
                 <projects>
                   <project path="$PROJECT_DIR$/Toolchain/Gradle/config" />
@@ -71,6 +76,7 @@
             <option value="$PROJECT_DIR$/Toolchain/Gradle/config/core" />
             <option value="$PROJECT_DIR$/Toolchain/Gradle/config/jvm" />
             <option value="$PROJECT_DIR$/Toolchain/Gradle/dependencies" />
+            <option value="$PROJECT_DIR$/Toolchain/Gradle/detekt-rule" />
             <option value="$PROJECT_DIR$/Toolchain/Gradle/generator" />
             <option value="$PROJECT_DIR$/Toolchain/Gradle/generator/dependencies" />
           </set>

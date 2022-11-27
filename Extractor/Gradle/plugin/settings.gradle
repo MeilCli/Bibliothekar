@@ -9,6 +9,8 @@ pluginManagement {
 }
 
 rootProject.name = 'Extractor'
+
+includeBuild("../../../Toolchain/Gradle/detekt-rule")
 include(":core")
 include(":jvm")
 include(":android")

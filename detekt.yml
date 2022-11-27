@@ -7,6 +7,8 @@ style:
         maxLineLength: 140
     UseOrEmpty:
         active: false
+    WildcardImport:
+        active: false
 
 formatting:
     MaximumLineLength:
@@ -15,3 +17,19 @@ formatting:
     ArgumentListWrapping:
         active: true
         maxLineLength: 140
+    NoWildcardImports:
+        active: false
+
+naming:
+    ClassNaming:
+        classPattern: '^[A-Z]?([A-Z][a-z0-9]+)+[A-Z]?$'
+    EnumNaming:
+        enumEntryPattern: '^[A-Z]?([A-Z][a-z0-9]+)+[A-Z]?$'
+    ObjectPropertyNaming:
+        constantPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+        propertyPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+        privatePropertyPattern: '^_?[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+    TopLevelPropertyNaming:
+        constantPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+        propertyPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+        privatePropertyPattern: '^_?[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'

@@ -4,6 +4,7 @@ import java.nio.file.StandardCopyOption
 rootProject.name = 'Bibliothekar'
 includeBuild('/Toolchain/Gradle/generator')
 includeBuild('/Toolchain/Gradle/dependencies')
+includeBuild('/Toolchain/Gradle/detekt-rule')
 includeBuild('/Toolchain/Gradle/config')
 includeBuild('/Extractor/Gradle/plugin')
 includeBuild('/Extractor/Gradle/sandbox')

@@ -4,6 +4,8 @@ import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import net.meilcli.bibliothekar.config.Dependencies
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ModuleDependency
 import java.io.File
 
 class DetektPlugin : Plugin<Project> {
@@ -17,7 +19,13 @@ class DetektPlugin : Plugin<Project> {
                 config = project.files(File(rootDir, "detekt.yml"))
                 basePath = rootDir.absolutePath
             }
-        project.dependencies.add("detektPlugins", Dependencies.IoGitlabArturboschDetekt.DetektFormatting)
+        val dependencies = mutableListOf<Dependency?>()
+        dependencies += project.dependencies.add("detektPlugins", Dependencies.IoGitlabArturboschDetekt.DetektFormatting)
+        dependencies += project.dependencies.add("detektPlugins", Dependencies.ToolchainDetektRule.ToolchainDetektRule)
+        dependencies.filterIsInstance<ModuleDependency>()
+            .forEach { moduleDependency ->
+                moduleDependency.exclude(mapOf("group" to "org.slf4j"))
+            }
     }
 
     // need rootDir but Project.rootDir is root of composite module
