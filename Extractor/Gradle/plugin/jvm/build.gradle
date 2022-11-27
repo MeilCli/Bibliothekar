@@ -1,6 +1,7 @@
 plugins {
     id 'java-gradle-plugin'
     id 'org.jetbrains.kotlin.jvm'
+    id 'org.jetbrains.kotlin.plugin.serialization'
     id 'io.gitlab.arturbosch.detekt'
     id 'net.meilcli.bibliothekar.toolchain.config.kotlin'
     id 'net.meilcli.bibliothekar.toolchain.config.detekt'
