@@ -11,4 +11,13 @@ data class PomProject(
     val organization: PomOrganization?,
     val licenses: List<PomLicense>,
     val developers: List<PomDeveloper>
-)
+) {
+
+    fun toDependency(): Dependency {
+        return Dependency(
+            group = group,
+            name = artifact,
+            version = version
+        )
+    }
+}
