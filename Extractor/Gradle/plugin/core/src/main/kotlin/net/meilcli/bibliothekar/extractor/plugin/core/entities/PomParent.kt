@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PomParentProject(
+data class PomParent(
     @SerialName("group")
     val group: String,
 

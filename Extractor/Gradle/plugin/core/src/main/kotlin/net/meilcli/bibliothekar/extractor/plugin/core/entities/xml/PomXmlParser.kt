@@ -5,11 +5,11 @@ import org.w3c.dom.Element
 import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 
-object PomProjectXmlParser : IPomProjectXmlParser {
+object PomXmlParser : IPomXmlParser {
 
     private val factory = DocumentBuilderFactory.newInstance()
 
-    override fun parse(inputStream: InputStream): PomProject {
+    override fun parse(inputStream: InputStream): Pom {
         val builder = factory.newDocumentBuilder()
         val root = builder.parse(inputStream)
         val project = root.documentElement
@@ -25,7 +25,7 @@ object PomProjectXmlParser : IPomProjectXmlParser {
         val licenses = project.getLicenses()
         val developers = project.getDevelopers()
 
-        return PomProject(
+        return Pom(
             group = groupId,
             artifact = artifactId,
             version = version,
@@ -59,7 +59,7 @@ object PomProjectXmlParser : IPomProjectXmlParser {
         return result
     }
 
-    private fun Element.getParent(): PomParentProject? {
+    private fun Element.getParent(): PomParent? {
         val parentTag = getElementsByTagName("parent")
         if (parentTag.length == 0) {
             return null
@@ -70,7 +70,7 @@ object PomProjectXmlParser : IPomProjectXmlParser {
         val artifactId = element.getText("artifactId")
         val version = element.getText("version")
 
-        return PomParentProject(
+        return PomParent(
             group = groupId,
             artifact = artifactId,
             version = version

@@ -1,17 +1,17 @@
 package net.meilcli.bibliothekar.extractor.plugin.core.entities.xml
 
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarException
-import net.meilcli.bibliothekar.extractor.plugin.core.entities.PomProject
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
 import org.junit.Assert.*
 import org.junit.Test
 
-class PomProjectXmlParserTest {
+class PomXmlParserTest {
 
-    private fun readFile(fileName: String): PomProject {
+    private fun readFile(fileName: String): Pom {
         return this.javaClass
             .classLoader
             .getResourceAsStream(fileName)
-            ?.let { PomProjectXmlParser.parse(it) }
+            ?.let { PomXmlParser.parse(it) }
             ?: throw BibliothekarException("cannot read $fileName")
     }
 

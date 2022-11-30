@@ -4,18 +4,18 @@ import net.meilcli.bibliothekar.extractor.plugin.core.entities.*
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class PomProjectJsonDeserializerTest {
+class PomJsonDeserializerTest {
 
     @Test
     fun testDeserialize_full() {
-        val pomProject = PomProject(
+        val pom = Pom(
             group = "net.meilcli",
             artifact = "bibliothekar",
             version = "1.0.0",
             name = "Bibliothekar",
             url = "https://meilcli.net",
             description = "The Bibliothekar",
-            parent = PomParentProject(
+            parent = PomParent(
                 group = "dev.meilcli",
                 artifact = "bibliothekar_parent",
                 version = "0.0.1"
@@ -36,16 +36,16 @@ class PomProjectJsonDeserializerTest {
                 )
             )
         )
-        val json = PomProjectJsonSerializer.serialize(pomProject)
+        val json = PomJsonSerializer.serialize(pom)
 
-        val actual = PomProjectJsonDeserializer.deserialize(json)
+        val actual = PomJsonDeserializer.deserialize(json)
 
-        assertEquals(pomProject, actual)
+        assertEquals(pom, actual)
     }
 
     @Test
     fun testDeserialize_partial() {
-        val pomProject = PomProject(
+        val pom = Pom(
             group = "net.meilcli",
             artifact = "bibliothekar",
             version = "1.0.0",
@@ -57,10 +57,10 @@ class PomProjectJsonDeserializerTest {
             licenses = emptyList(),
             developers = emptyList()
         )
-        val json = PomProjectJsonSerializer.serialize(pomProject)
+        val json = PomJsonSerializer.serialize(pom)
 
-        val actual = PomProjectJsonDeserializer.deserialize(json)
+        val actual = PomJsonDeserializer.deserialize(json)
 
-        assertEquals(pomProject, actual)
+        assertEquals(pom, actual)
     }
 }

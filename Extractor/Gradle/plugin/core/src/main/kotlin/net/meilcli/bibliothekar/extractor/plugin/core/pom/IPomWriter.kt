@@ -1,8 +1,8 @@
 package net.meilcli.bibliothekar.extractor.plugin.core.pom
 
-import net.meilcli.bibliothekar.extractor.plugin.core.entities.PomProject
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
 
 interface IPomWriter {
 
-    fun write(pomProject: PomProject)
+    fun write(pom: Pom)
 }

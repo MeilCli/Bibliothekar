@@ -1,8 +1,8 @@
 package net.meilcli.bibliothekar.extractor.plugin.core.pom
 
 import net.meilcli.bibliothekar.extractor.plugin.core.entities.Dependency
-import net.meilcli.bibliothekar.extractor.plugin.core.entities.PomProject
-import net.meilcli.bibliothekar.extractor.plugin.core.entities.xml.IPomProjectXmlParser
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.xml.IPomXmlParser
 import org.gradle.api.Project
 import org.gradle.api.artifacts.result.ResolvedArtifactResult
 import org.gradle.api.internal.artifacts.DefaultModuleIdentifier
@@ -14,15 +14,15 @@ import java.io.File
 
 class GradlePomReader(
     private val project: Project,
-    private val pomProjectXmlParser: IPomProjectXmlParser
+    private val pomXmlParser: IPomXmlParser
 ) : IPomReader {
 
     private val logger = LoggerFactory.getLogger(GradlePomReader::class.java)
 
-    override fun read(dependency: Dependency): PomProject? {
+    override fun read(dependency: Dependency): Pom? {
         val pomFile = dependency.getPomFile(project) ?: return null
         return pomFile.inputStream().use {
-            pomProjectXmlParser.parse(it)
+            pomXmlParser.parse(it)
         }
     }
 

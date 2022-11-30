@@ -1,14 +1,14 @@
 package net.meilcli.bibliothekar.extractor.plugin.core.pom
 
 import net.meilcli.bibliothekar.extractor.plugin.core.entities.Dependency
-import net.meilcli.bibliothekar.extractor.plugin.core.entities.PomProject
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
 
 class CompositeCachingPomReader(
     private val gradlePomReader: IPomReader,
     private val inMemoryPomCache: IPomCache
 ) : IPomReader {
 
-    override fun read(dependency: Dependency): PomProject? {
+    override fun read(dependency: Dependency): Pom? {
         var result = inMemoryPomCache.read(dependency)
         if (result != null) {
             return result

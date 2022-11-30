@@ -2,7 +2,7 @@ package net.meilcli.bibliothekar.extractor.plugin.core
 
 import net.meilcli.bibliothekar.extractor.plugin.core.dependencies.DependencyLoader
 import net.meilcli.bibliothekar.extractor.plugin.core.dependencies.IDependencyLoader
-import net.meilcli.bibliothekar.extractor.plugin.core.entities.xml.PomProjectXmlParser
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.xml.PomXmlParser
 import net.meilcli.bibliothekar.extractor.plugin.core.pom.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
@@ -26,7 +26,7 @@ open class BibliothekarExtractTask : DefaultTask() {
 
     private val pomReader: IPomReader by lazy {
         CompositeCachingPomReader(
-            gradlePomReader = GradlePomReader(project, PomProjectXmlParser),
+            gradlePomReader = GradlePomReader(project, PomXmlParser),
             inMemoryPomCache = inMemoryPomCache
         )
     }
@@ -46,9 +46,9 @@ open class BibliothekarExtractTask : DefaultTask() {
         logger.warn("hello DumpTask")
 
         val dependencies = dependencyLoader.load(configuration)
-        val pomProjects = dependencies.mapNotNull { pomReader.read(it) }
+        val poms = dependencies.mapNotNull { pomReader.read(it) }
 
-        pomProjects.forEach {
+        poms.forEach {
             logger.warn("${it.group}:${it.artifact}:${it.version} is ${it.licenses.joinToString { license -> license.name ?: "" }}")
         }
     }

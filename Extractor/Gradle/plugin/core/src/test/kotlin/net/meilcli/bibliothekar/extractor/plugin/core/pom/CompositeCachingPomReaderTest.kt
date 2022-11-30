@@ -2,7 +2,7 @@ package net.meilcli.bibliothekar.extractor.plugin.core.pom
 
 import io.mockk.every
 import io.mockk.mockk
-import net.meilcli.bibliothekar.extractor.plugin.core.entities.PomProject
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -16,22 +16,22 @@ class CompositeCachingPomReaderTest {
             gradlePomReader = gradlePomReader,
             inMemoryPomCache = inMemoryPomCache
         )
-        val pomProject = mockk<PomProject>(relaxed = true)
-        val dependency = pomProject.toDependency()
+        val pom = mockk<Pom>(relaxed = true)
+        val dependency = pom.toDependency()
 
-        inMemoryPomCache.write(pomProject)
+        inMemoryPomCache.write(pom)
 
         val actual = compositeCachingPomReader.read(dependency)
 
-        assertEquals(pomProject, actual)
+        assertEquals(pom, actual)
     }
 
     @Test
     fun testRead_fromGradle() {
-        val pomProject = mockk<PomProject>(relaxed = true)
-        val dependency = pomProject.toDependency()
+        val pom = mockk<Pom>(relaxed = true)
+        val dependency = pom.toDependency()
         val gradlePomReader = mockk<IPomReader> {
-            every { read(dependency) } returns pomProject
+            every { read(dependency) } returns pom
         }
         val inMemoryPomCache = InMemoryPomCache()
         val compositeCachingPomReader = CompositeCachingPomReader(
@@ -41,6 +41,6 @@ class CompositeCachingPomReaderTest {
 
         val actual = compositeCachingPomReader.read(dependency)
 
-        assertEquals(pomProject, actual)
+        assertEquals(pom, actual)
     }
 }
