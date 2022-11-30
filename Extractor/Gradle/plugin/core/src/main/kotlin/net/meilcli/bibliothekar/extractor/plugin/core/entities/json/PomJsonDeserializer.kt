@@ -6,7 +6,10 @@ import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
 
 object PomJsonDeserializer : IJsonDeserializer<Pom> {
 
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json = Json {
+        ignoreUnknownKeys = true
+        prettyPrint = true
+    }
 
     override fun deserialize(jsonString: String): Pom {
         return json.decodeFromString(jsonString)

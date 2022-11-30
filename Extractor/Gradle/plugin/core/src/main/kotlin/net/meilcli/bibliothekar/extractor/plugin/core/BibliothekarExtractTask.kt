@@ -2,14 +2,18 @@ package net.meilcli.bibliothekar.extractor.plugin.core
 
 import net.meilcli.bibliothekar.extractor.plugin.core.dependencies.DependencyLoader
 import net.meilcli.bibliothekar.extractor.plugin.core.dependencies.IDependencyLoader
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.json.PomJsonDeserializer
+import net.meilcli.bibliothekar.extractor.plugin.core.entities.json.PomJsonSerializer
 import net.meilcli.bibliothekar.extractor.plugin.core.entities.xml.PomXmlParser
 import net.meilcli.bibliothekar.extractor.plugin.core.pom.*
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.tasks.TaskAction
 import org.slf4j.LoggerFactory
+import java.io.File
+import java.nio.file.Paths
 
-// temp file
 open class BibliothekarExtractTask : DefaultTask() {
 
     companion object {
@@ -27,23 +31,32 @@ open class BibliothekarExtractTask : DefaultTask() {
     private val pomReader: IPomReader by lazy {
         CompositeCachingPomReader(
             gradlePomReader = GradlePomReader(project, PomXmlParser),
-            inMemoryPomCache = inMemoryPomCache
+            inMemoryPomCache = inMemoryPomCache,
+            filePomCache = FilePomCache(checkNotNull(cacheDirectory), PomJsonSerializer, PomJsonDeserializer)
         )
     }
 
     private var configuration: Configuration? = null
+    private var cacheDirectory: File? = null
 
-    fun setup(configuration: Configuration) {
+    fun setup(rootProject: Project, configuration: Configuration) {
         this.group = "bibliothekar_extract"
         this.description = "extract ${configuration.name} dependencies"
         this.configuration = configuration
+        this.cacheDirectory = rootProject.buildDir
+            .toPath()
+            .resolve(Paths.get("cache/bibliothekar/maven"))
+            .toFile()
     }
 
     @TaskAction
     fun action() {
         val configuration = configuration ?: throw BibliothekarException("configuration must be initialized")
+        val cacheDirectory = cacheDirectory ?: throw BibliothekarException("cacheDirectory must be initialized")
 
-        logger.warn("hello DumpTask")
+        if (cacheDirectory.exists().not()) {
+            cacheDirectory.mkdirs()
+        }
 
         val dependencies = dependencyLoader.load(configuration)
         val poms = dependencies.mapNotNull { pomReader.read(it) }
