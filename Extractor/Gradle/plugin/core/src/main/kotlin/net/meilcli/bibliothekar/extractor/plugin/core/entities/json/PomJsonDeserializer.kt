@@ -4,7 +4,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
 
-object PomJsonDeserializer : IPomJsonDeserializer {
+object PomJsonDeserializer : IJsonDeserializer<Pom> {
 
     private val json = Json { ignoreUnknownKeys = true }
 

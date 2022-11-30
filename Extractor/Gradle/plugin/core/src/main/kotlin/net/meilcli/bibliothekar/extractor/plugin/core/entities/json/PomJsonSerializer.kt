@@ -4,11 +4,11 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import net.meilcli.bibliothekar.extractor.plugin.core.entities.Pom
 
-object PomJsonSerializer : IPomJsonSerializer {
+object PomJsonSerializer : IJsonSerializer<Pom> {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    override fun serialize(pom: Pom): String {
-        return json.encodeToString(pom)
+    override fun serialize(value: Pom): String {
+        return json.encodeToString(value)
     }
 }
