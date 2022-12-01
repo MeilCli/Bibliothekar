@@ -32,7 +32,7 @@ class BibliothekarPlugin : Plugin<Project> {
             configurations.forEach { configuration ->
                 if (configuration.isCanBeResolved) {
                     project.tasks.register(BibliothekarExtractTask.taskName(configuration), BibliothekarExtractTask::class.java) { task ->
-                        task.setup(rootProject, configuration)
+                        task.setup(rootProject, this, configuration)
                     }
                 }
             }

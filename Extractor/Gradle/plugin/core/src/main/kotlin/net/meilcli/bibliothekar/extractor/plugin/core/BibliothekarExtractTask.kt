@@ -9,6 +9,7 @@ import net.meilcli.bibliothekar.extractor.plugin.core.pom.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -38,10 +39,18 @@ open class BibliothekarExtractTask : DefaultTask() {
         )
     }
 
+    private val outputPomWriter: IPomWriter by lazy {
+        FilePomCache(checkNotNull(outputDirectory), PomJsonSerializer, PomJsonDeserializer)
+    }
+
     private var configuration: Configuration? = null
     private var cacheDirectory: File? = null
 
-    fun setup(rootProject: Project, configuration: Configuration) {
+    @OutputDirectory
+    var outputDirectory: File? = null
+        private set
+
+    fun setup(rootProject: Project, project: Project, configuration: Configuration) {
         this.group = "bibliothekar_extract"
         this.description = "extract ${configuration.name} dependencies"
         this.configuration = configuration
@@ -49,15 +58,27 @@ open class BibliothekarExtractTask : DefaultTask() {
             .toPath()
             .resolve(Paths.get("cache/bibliothekar/maven"))
             .toFile()
+        this.outputDirectory = project.buildDir
+            .toPath()
+            .resolve(Paths.get("output/bibliothekar/extract/${configuration.name}"))
+            .toFile()
     }
 
     @TaskAction
     fun action() {
         val configuration = configuration ?: throw BibliothekarException("configuration must be initialized")
         val cacheDirectory = cacheDirectory ?: throw BibliothekarException("cacheDirectory must be initialized")
+        val outputDirectory = outputDirectory ?: throw BibliothekarException("outputDirectory must be initialized")
 
         if (cacheDirectory.exists().not()) {
             cacheDirectory.mkdirs()
+        }
+
+        if (outputDirectory.exists().not()) {
+            outputDirectory.mkdirs()
+        } else {
+            outputDirectory.deleteRecursively()
+            outputDirectory.mkdirs()
         }
 
         val dependencies = dependencyLoader.load(configuration)
@@ -65,6 +86,7 @@ open class BibliothekarExtractTask : DefaultTask() {
 
         poms.forEach {
             logger.warn("${it.group}:${it.artifact}:${it.version} is ${it.licenses.joinToString { license -> license.name ?: "" }}")
+            outputPomWriter.write(it)
         }
     }
 }
