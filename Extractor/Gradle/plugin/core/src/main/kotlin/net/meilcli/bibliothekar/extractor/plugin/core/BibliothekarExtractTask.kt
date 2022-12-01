@@ -29,10 +29,12 @@ open class BibliothekarExtractTask : DefaultTask() {
     private val logger = LoggerFactory.getLogger(BibliothekarExtractTask::class.java)
 
     private val pomReader: IPomReader by lazy {
-        CompositeCachingPomReader(
-            gradlePomReader = GradlePomReader(project, PomXmlParser),
-            inMemoryPomCache = inMemoryPomCache,
-            filePomCache = FilePomCache(checkNotNull(cacheDirectory), PomJsonSerializer, PomJsonDeserializer)
+        ParentResolvingPomReader(
+            CompositeCachingPomReader(
+                gradlePomReader = GradlePomReader(project, PomXmlParser),
+                inMemoryPomCache = inMemoryPomCache,
+                filePomCache = FilePomCache(checkNotNull(cacheDirectory), PomJsonSerializer, PomJsonDeserializer)
+            )
         )
     }
 

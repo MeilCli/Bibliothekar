@@ -13,4 +13,13 @@ data class PomParent(
 
     @SerialName("version")
     val version: String
-)
+) {
+
+    fun toDependency(): Dependency {
+        return Dependency(
+            group = group,
+            name = artifact,
+            version = version
+        )
+    }
+}

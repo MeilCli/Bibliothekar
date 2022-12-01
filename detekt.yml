@@ -12,6 +12,10 @@ style:
     ReturnCount:
         active: true
         max: 5
+    LoopWithTooManyJumpStatements:
+        active: true
+        maxJumpCount: 5
+
 
 formatting:
     MaximumLineLength:
