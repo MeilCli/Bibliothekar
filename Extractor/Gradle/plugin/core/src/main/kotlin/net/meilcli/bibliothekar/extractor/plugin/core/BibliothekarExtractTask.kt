@@ -82,7 +82,14 @@ open class BibliothekarExtractTask : DefaultTask() {
         }
 
         val dependencies = dependencyLoader.load(configuration)
-        val poms = dependencies.mapNotNull { pomReader.read(it) }
+        val poms = dependencies.map { Pair(it, pomReader.read(it)) }
+            .onEach {
+                if (it.second == null) {
+                    // ToDo: raise as error option
+                    logger.warn("${it.first} cannot found")
+                }
+            }
+            .mapNotNull { it.second }
 
         poms.forEach {
             outputPomWriter.write(it)
