@@ -1,5 +1,6 @@
 package net.meilcli.bibliothekar.extractor.plugin.jvm
 
+import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarException
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarExtractTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarTask
 import org.gradle.api.Plugin
@@ -74,6 +75,7 @@ class BibliothekarPlugin : Plugin<Project> {
         if (configuration.isCanBeResolved) {
             return configuration
         }
-        return configurations.findByName("${configuration.name}DependenciesMetadata") ?: throw IllegalStateException("a")
+        return configurations.findByName("${configuration.name}DependenciesMetadata")
+            ?: throw BibliothekarException("cannot find resolvable configuration of ${configuration.name}")
     }
 }
