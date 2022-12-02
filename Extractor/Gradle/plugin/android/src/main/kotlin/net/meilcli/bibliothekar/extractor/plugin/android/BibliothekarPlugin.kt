@@ -4,7 +4,7 @@ import com.android.build.api.variant.Variant
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.android.build.gradle.internal.plugins.LibraryPlugin
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarExtractTask
-import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarTask
+import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarReportTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -54,7 +54,7 @@ class BibliothekarPlugin : Plugin<Project> {
                         .filterIsInstance<ProjectDependency>()
                         .map { it.dependencyProject }
                     project.tasks
-                        .register("${variant.name}Bibliothekar", BibliothekarTask::class.java) { task ->
+                        .register(BibliothekarReportTask.taskName(variant.name), BibliothekarReportTask::class.java) { task ->
                             task.group = "dump"
                             task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
 
@@ -64,9 +64,11 @@ class BibliothekarPlugin : Plugin<Project> {
                                 ) {
                                     val dependencyProjectVariant = dependencyProject.getVariants()
                                         .findMatchVariant(variant)
-                                    task.dependsOn("${dependencyProject.path}:${dependencyProjectVariant.name}Bibliothekar")
+                                    task.dependsOn(
+                                        "${dependencyProject.path}:${BibliothekarReportTask.taskName(dependencyProjectVariant.name)}"
+                                    )
                                 } else {
-                                    task.dependsOn("${dependencyProject.path}:bibliothekar")
+                                    task.dependsOn("${dependencyProject.path}:${BibliothekarReportTask.taskName()}")
                                 }
                             }
                         }
