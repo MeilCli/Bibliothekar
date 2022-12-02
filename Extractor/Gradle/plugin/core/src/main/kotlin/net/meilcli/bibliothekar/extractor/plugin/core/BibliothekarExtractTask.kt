@@ -85,8 +85,9 @@ open class BibliothekarExtractTask : DefaultTask() {
         val poms = dependencies.mapNotNull { pomReader.read(it) }
 
         poms.forEach {
-            logger.warn("${it.group}:${it.artifact}:${it.version} is ${it.licenses.joinToString { license -> license.name ?: "" }}")
             outputPomWriter.write(it)
         }
+
+        logger.info("write ${poms.size} outputs to ${outputDirectory.absolutePath}")
     }
 }
