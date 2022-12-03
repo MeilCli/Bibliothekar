@@ -9,6 +9,9 @@ pluginManagement {
             if (requested.id.id == "com.android.library") {
                 useModule("com.android.tools.build:gradle:${requested.version}")
             }
+            if (requested.id.id == "com.android.application") {
+                useModule("com.android.tools.build:gradle:${requested.version}")
+            }
         }
     }
     includeBuild '../../../Toolchain/Gradle/config'
@@ -21,5 +24,6 @@ includeBuild '../../../Toolchain/Gradle/detekt-rule'
 include(":jvm")
 include(":jvm-child")
 include(":jvm-nest:jvm-nested")
+include(":android-application")
 include(":android-library")
 include(":android-library-child")

@@ -1,0 +1,17 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'io.gitlab.arturbosch.detekt'
+    id 'net.meilcli.bibliothekar.toolchain.config.android-application'
+    id 'net.meilcli.bibliothekar.toolchain.config.detekt'
+    id 'net.meilcli.bibliothekar.extractor.plugin.android'
+}
+
+android {
+    namespace 'net.meilcli.bibliothekar.sandbox.application'
+}
+
+dependencies {
+    implementation project(':android-library-child')
+    implementation project(':jvm-child')
+}

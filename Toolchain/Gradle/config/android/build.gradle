@@ -24,7 +24,11 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        greeting {
+        application {
+            id = 'net.meilcli.bibliothekar.toolchain.config.android-application'
+            implementationClass = 'net.meilcli.bibliothekar.toolchain.config.android.AndroidApplicationPlugin'
+        }
+        library {
             id = 'net.meilcli.bibliothekar.toolchain.config.android-library'
             implementationClass = 'net.meilcli.bibliothekar.toolchain.config.android.AndroidLibraryPlugin'
         }
