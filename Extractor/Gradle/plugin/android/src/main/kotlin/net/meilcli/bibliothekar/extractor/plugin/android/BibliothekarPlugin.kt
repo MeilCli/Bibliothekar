@@ -1,29 +1,37 @@
 package net.meilcli.bibliothekar.extractor.plugin.android
 
-import com.android.build.api.variant.Variant
+import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.android.build.gradle.internal.plugins.LibraryPlugin
+import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarException
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarExtractTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarReportTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ProjectDependency
-import org.slf4j.LoggerFactory
 
+@Suppress("unused")
 class BibliothekarPlugin : Plugin<Project> {
-
-    private val logger = LoggerFactory.getLogger(BibliothekarPlugin::class.java)
 
     override fun apply(project: Project) {
         project.setUpExtractTask()
 
         if (project.plugins.hasPlugin(LibraryPlugin::class.java)) {
-            setupDumpWithLibraryPlugin(project)
+            project.setUpReportTask()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is LibraryPlugin) {
-                    setupDumpWithLibraryPlugin(project)
+                    project.setUpReportTask()
+                }
+            }
+        }
+        if (project.plugins.hasPlugin(AppPlugin::class.java)) {
+            project.setUpReportTask()
+        } else {
+            project.plugins.whenPluginAdded {
+                if (it is AppPlugin) {
+                    project.setUpReportTask()
                 }
             }
         }
@@ -41,88 +49,49 @@ class BibliothekarPlugin : Plugin<Project> {
         }
     }
 
-    private fun setupDumpWithLibraryPlugin(project: Project) {
-        project.afterEvaluate {
-            project.getVariants()
-                .forEach { variant ->
+    @Suppress("UnstableApiUsage")
+    private fun Project.setUpReportTask() {
+        project.extensions.findByType(AndroidComponentsExtension::class.java)
+            ?.onVariants { variant ->
+                tasks.register(BibliothekarReportTask.taskName(variant.name), BibliothekarReportTask::class.java) { task ->
+                    task.setup()
+
                     val dependencyConfigurations = variant.runtimeConfiguration
                         .extendsFrom
-                        .map { project.getDependencyDefinedConfiguration(it) }
+                        .map { getDependencyDefinedConfiguration(it) }
+
+                    task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
+
                     val dependencyProjects = variant.runtimeConfiguration
                         .extendsFrom
                         .flatMap { it.dependencies }
                         .filterIsInstance<ProjectDependency>()
                         .map { it.dependencyProject }
-                    project.tasks
-                        .register(BibliothekarReportTask.taskName(variant.name), BibliothekarReportTask::class.java) { task ->
-                            task.group = "dump"
-                            task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
+                    val dependencyProjectsWithVariant = DependencyProjectFinder.findProjectsWithVariant(this, variant)
 
-                            dependencyProjects.forEach { dependencyProject ->
-                                if (dependencyProject.plugins.hasPlugin(LibraryPlugin::class.java) ||
-                                    dependencyProject.plugins.hasPlugin(AppPlugin::class.java)
-                                ) {
-                                    val dependencyProjectVariant = dependencyProject.getVariants()
-                                        .findMatchVariant(variant)
-                                    task.dependsOn(
-                                        "${dependencyProject.path}:${BibliothekarReportTask.taskName(dependencyProjectVariant.name)}"
-                                    )
-                                } else {
-                                    task.dependsOn("${dependencyProject.path}:${BibliothekarReportTask.taskName()}")
-                                }
-                            }
+                    dependencyProjects.forEach { dependencyProject ->
+                        if (dependencyProject.plugins.hasPlugin(LibraryPlugin::class.java) ||
+                            dependencyProject.plugins.hasPlugin(AppPlugin::class.java)
+                        ) {
+                            val variantName = dependencyProjectsWithVariant.find { it.project.path == dependencyProject.path }
+                                ?.variantName
+                                ?: throw BibliothekarException("cannot found dependency project's variant")
+                            task.dependsOn(
+                                "${dependencyProject.path}:${BibliothekarReportTask.taskName(variantName)}"
+                            )
+                        } else {
+                            task.dependsOn("${dependencyProject.path}:${BibliothekarReportTask.taskName()}")
                         }
+                    }
                 }
-        }
+            }
     }
 
     private fun Project.getDependencyDefinedConfiguration(configuration: Configuration): Configuration {
         if (configuration.isCanBeResolved) {
             return configuration
         }
-        return configurations.findByName("${configuration.name}DependenciesMetadata") ?: throw IllegalStateException("a")
-    }
-
-    private fun Project.getVariants(): List<Variant> {
-        val libraryVariants = project.plugins
-            .findPlugin(LibraryPlugin::class.java)
-            ?.variantManager
-            ?.mainComponents
-            ?.map { it.variant }
-        val applicationVariants = project.plugins
-            .findPlugin(AppPlugin::class.java)
-            ?.variantManager
-            ?.mainComponents
-            ?.map { it.variant }
-        return libraryVariants ?: applicationVariants ?: throw Exception()
-    }
-
-    private fun List<Variant>.findMatchVariant(target: Variant): Variant {
-        // exactly match
-        val exactlyMatch = find { it.name == target.name }
-        if (exactlyMatch != null) {
-            return exactlyMatch
-        }
-
-        // lazy match for flavor
-        for (variant in this) {
-            if (variant.buildType != target.buildType) {
-                // buildType needs exactly match
-                continue
-            }
-
-            val match = variant.productFlavors
-                .all { findFlavor ->
-                    target.productFlavors
-                        .any { targetFlavor ->
-                            targetFlavor.first == findFlavor.first && targetFlavor.second == findFlavor.second
-                        }
-                }
-            if (match) {
-                return variant
-            }
-        }
-
-        throw Exception("variants ${this.size}")
+        return configurations.findByName("${configuration.name}DependenciesMetadata")
+            ?: throw BibliothekarException("cannot find resolvable configuration of ${configuration.name}")
     }
 }
