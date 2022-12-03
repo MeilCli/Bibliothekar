@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bibliothekar sandbox application</string>
+    <string name="title_android_dynamic">sandox-dynamic</string>
 </resources>

@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.dynamic-feature'
     id 'org.jetbrains.kotlin.android'
     id 'io.gitlab.arturbosch.detekt'
     id 'net.meilcli.bibliothekar.toolchain.config.android-application'
@@ -8,11 +8,9 @@ plugins {
 }
 
 android {
-    namespace 'net.meilcli.bibliothekar.sandbox.application'
-    dynamicFeatures = [':android-dynamic']
+    namespace 'net.meilcli.bibliothekar.sandbox.dynamic'
 }
 
 dependencies {
-    implementation project(':android-library-child')
-    implementation project(':jvm-child')
+    implementation project(':android-application')
 }

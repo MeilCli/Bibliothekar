@@ -43,6 +43,7 @@
                 <projects>
                   <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-application" />
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-dynamic" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-library" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-library-child" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm" />
@@ -67,6 +68,7 @@
             <option value="$PROJECT_DIR$/Extractor/Gradle/plugin/jvm" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-application" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-dynamic" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-library" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/android-library-child" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox/jvm" />

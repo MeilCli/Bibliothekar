@@ -12,6 +12,9 @@ pluginManagement {
             if (requested.id.id == "com.android.application") {
                 useModule("com.android.tools.build:gradle:${requested.version}")
             }
+            if (requested.id.id == "com.android.dynamic-feature") {
+                useModule("com.android.tools.build:gradle:${requested.version}")
+            }
         }
     }
     includeBuild '../../../Toolchain/Gradle/config'
@@ -25,5 +28,6 @@ include(":jvm")
 include(":jvm-child")
 include(":jvm-nest:jvm-nested")
 include(":android-application")
+include(":android-dynamic")
 include(":android-library")
 include(":android-library-child")
