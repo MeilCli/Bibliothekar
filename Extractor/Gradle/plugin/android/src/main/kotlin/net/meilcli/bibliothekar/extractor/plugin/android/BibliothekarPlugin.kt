@@ -98,7 +98,9 @@ class BibliothekarPlugin : Plugin<Project> {
                             dependencyProject.plugins.hasPlugin(AppPlugin::class.java) ||
                             dependencyProject.plugins.hasPlugin(DynamicFeaturePlugin::class.java)
                         ) {
-                            if (this.plugins.hasPlugin(DynamicFeaturePlugin::class.java)) {
+                            if (this.plugins.hasPlugin(DynamicFeaturePlugin::class.java) &&
+                                dependencyProject.plugins.hasPlugin(LibraryPlugin::class.java).not()
+                            ) {
                                 // reversed dependency
                                 return@forEach
                             }
