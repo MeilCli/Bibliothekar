@@ -8,6 +8,7 @@ open class BibliothekarReportTask : DefaultTask() {
 
     companion object {
 
+        @Suppress("detekt.FunctionOnlyReturningConstant")
         fun taskName(): String {
             return "bibliothekarReport"
         }
