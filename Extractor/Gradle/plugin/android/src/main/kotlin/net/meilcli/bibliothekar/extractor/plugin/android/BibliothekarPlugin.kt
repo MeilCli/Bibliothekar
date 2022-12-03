@@ -3,6 +3,7 @@ package net.meilcli.bibliothekar.extractor.plugin.android
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.android.build.gradle.internal.plugins.LibraryPlugin
+import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarConfirmTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarException
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarExtractTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarReportTask
@@ -19,19 +20,23 @@ class BibliothekarPlugin : Plugin<Project> {
 
         if (project.plugins.hasPlugin(LibraryPlugin::class.java)) {
             project.setUpReportTask()
+            project.setUpConfirmTask()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is LibraryPlugin) {
                     project.setUpReportTask()
+                    project.setUpConfirmTask()
                 }
             }
         }
         if (project.plugins.hasPlugin(AppPlugin::class.java)) {
             project.setUpReportTask()
+            project.setUpConfirmTask()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is AppPlugin) {
                     project.setUpReportTask()
+                    project.setUpConfirmTask()
                 }
             }
         }
@@ -83,6 +88,15 @@ class BibliothekarPlugin : Plugin<Project> {
                             task.dependsOn("${dependencyProject.path}:${BibliothekarReportTask.taskName()}")
                         }
                     }
+                }
+            }
+    }
+
+    private fun Project.setUpConfirmTask() {
+        project.extensions.findByType(AndroidComponentsExtension::class.java)
+            ?.onVariants { variant ->
+                tasks.register(BibliothekarConfirmTask.taskName(variant.name), BibliothekarConfirmTask::class.java) { task ->
+                    task.setup(variant.name)
                 }
             }
     }

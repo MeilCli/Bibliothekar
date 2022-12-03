@@ -1,5 +1,6 @@
 package net.meilcli.bibliothekar.extractor.plugin.jvm
 
+import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarConfirmTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarException
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarExtractTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarReportTask
@@ -16,10 +17,12 @@ class BibliothekarPlugin : Plugin<Project> {
 
         if (project.plugins.hasPlugin(JavaPlugin::class.java)) {
             project.setUpReportTask()
+            project.setUpConfirmTask()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is JavaPlugin) {
                     project.setUpReportTask()
+                    project.setUpConfirmTask()
                 }
             }
         }
@@ -42,24 +45,31 @@ class BibliothekarPlugin : Plugin<Project> {
             configurations
                 .findByName(JavaPlugin.RUNTIME_ELEMENTS_CONFIGURATION_NAME)
                 ?.also { runtimeElementsConfiguration ->
-                    tasks
-                        .register(BibliothekarReportTask.taskName(), BibliothekarReportTask::class.java) { task ->
-                            task.setup()
+                    tasks.register(BibliothekarReportTask.taskName(), BibliothekarReportTask::class.java) { task ->
+                        task.setup()
 
-                            val dependencyConfigurations = runtimeElementsConfiguration.extendsFrom
-                                .map { getDependencyDefinedConfiguration(it) }
+                        val dependencyConfigurations = runtimeElementsConfiguration.extendsFrom
+                            .map { getDependencyDefinedConfiguration(it) }
 
-                            task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
+                        task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
 
-                            val dependencyProjects = runtimeElementsConfiguration.extendsFrom
-                                .flatMap { it.dependencies }
-                                .filterIsInstance<ProjectDependency>()
-                                .map { it.dependencyProject }
-                            dependencyProjects.forEach { dependencyProject ->
-                                task.dependsOn("${dependencyProject.path}:${BibliothekarReportTask.taskName()}")
-                            }
+                        val dependencyProjects = runtimeElementsConfiguration.extendsFrom
+                            .flatMap { it.dependencies }
+                            .filterIsInstance<ProjectDependency>()
+                            .map { it.dependencyProject }
+                        dependencyProjects.forEach { dependencyProject ->
+                            task.dependsOn("${dependencyProject.path}:${BibliothekarReportTask.taskName()}")
                         }
+                    }
                 }
+        }
+    }
+
+    private fun Project.setUpConfirmTask() {
+        afterEvaluate {
+            tasks.register(BibliothekarConfirmTask.taskName(), BibliothekarConfirmTask::class.java) { task ->
+                task.setup(null)
+            }
         }
     }
 

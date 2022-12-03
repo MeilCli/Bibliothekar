@@ -21,7 +21,7 @@ open class BibliothekarReportTask : DefaultTask() {
     private val logger = LoggerFactory.getLogger(BibliothekarReportTask::class.java)
 
     fun setup() {
-        this.group = "bibliothekar"
+        this.group = TaskConstants.bibliothekarGroup
     }
 
     @TaskAction

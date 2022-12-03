@@ -51,7 +51,7 @@ open class BibliothekarExtractTask : DefaultTask() {
         private set
 
     fun setup(rootProject: Project, project: Project, configuration: Configuration) {
-        this.group = "bibliothekar_extract"
+        this.group = TaskConstants.bibliothekarExtractGroup
         this.description = "extract ${configuration.name} dependencies"
         this.configuration = configuration
         this.cacheDirectory = rootProject.buildDir
