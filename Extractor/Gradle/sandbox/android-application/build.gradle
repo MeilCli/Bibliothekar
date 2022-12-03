@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace 'net.meilcli.bibliothekar.sandbox.application'
-    dynamicFeatures = [':android-dynamic']
+    dynamicFeatures = [':dynamic']
 }
 
 dependencies {

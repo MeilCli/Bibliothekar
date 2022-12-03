@@ -2,6 +2,7 @@ package net.meilcli.bibliothekar.extractor.plugin.android
 
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.internal.plugins.AppPlugin
+import com.android.build.gradle.internal.plugins.DynamicFeaturePlugin
 import com.android.build.gradle.internal.plugins.LibraryPlugin
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarConfirmTask
 import net.meilcli.bibliothekar.extractor.plugin.core.BibliothekarException
@@ -40,6 +41,17 @@ class BibliothekarPlugin : Plugin<Project> {
                 }
             }
         }
+        if (project.plugins.hasPlugin(DynamicFeaturePlugin::class.java)) {
+            project.setUpReportTask()
+            project.setUpConfirmTask()
+        } else {
+            project.plugins.whenPluginAdded {
+                if (it is DynamicFeaturePlugin) {
+                    project.setUpReportTask()
+                    project.setUpConfirmTask()
+                }
+            }
+        }
     }
 
     private fun Project.setUpExtractTask() {
@@ -67,17 +79,29 @@ class BibliothekarPlugin : Plugin<Project> {
 
                     task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
 
-                    val dependencyProjects = variant.runtimeConfiguration
+                    // android dynamic feature module
+                    val reversedDependencyProjects = configurations.findByName("${variant.name}ReverseMetadataValues")
+                        ?.dependencies
+                        ?.filterIsInstance<ProjectDependency>()
+                        ?.map { it.dependencyProject }
+                        .orEmpty()
+                    val runtimeDependencyProjects = variant.runtimeConfiguration
                         .extendsFrom
                         .flatMap { it.dependencies }
                         .filterIsInstance<ProjectDependency>()
                         .map { it.dependencyProject }
+                    val dependencyProjects = runtimeDependencyProjects + reversedDependencyProjects
                     val dependencyProjectsWithVariant = DependencyProjectFinder.findProjectsWithVariant(this, variant)
 
                     dependencyProjects.forEach { dependencyProject ->
                         if (dependencyProject.plugins.hasPlugin(LibraryPlugin::class.java) ||
-                            dependencyProject.plugins.hasPlugin(AppPlugin::class.java)
+                            dependencyProject.plugins.hasPlugin(AppPlugin::class.java) ||
+                            dependencyProject.plugins.hasPlugin(DynamicFeaturePlugin::class.java)
                         ) {
+                            if (this.plugins.hasPlugin(DynamicFeaturePlugin::class.java)) {
+                                // reversed dependency
+                                return@forEach
+                            }
                             val variantName = dependencyProjectsWithVariant.find { it.project.path == dependencyProject.path }
                                 ?.variantName
                                 ?: throw BibliothekarException("cannot found dependency project's variant")

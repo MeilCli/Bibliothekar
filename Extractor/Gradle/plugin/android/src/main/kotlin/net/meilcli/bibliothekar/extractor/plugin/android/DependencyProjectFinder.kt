@@ -13,19 +13,30 @@ object DependencyProjectFinder {
         val variantName: String
     )
 
+    // for finding dependency android library
     private val packageRenderscriptRegex = Regex("package(.+?)Renderscript")
+
+    // for finding reversed dependency android dynamic feature
+    private val generateFeatureTransitiveDeps = Regex("generate(.+?)FeatureTransitiveDeps")
 
     fun findProjectsWithVariant(sourceProject: Project, sourceVariant: Variant): List<ProjectWithVariant> {
         val taskName = "compile${sourceVariant.name.capitalized()}Renderscript"
         val rootTask = sourceProject.tasks.findByName(taskName) ?: throw BibliothekarException("cannot find $taskName")
         val childTasks = rootTask.getDependencyTasks()
         val grandChildTasks = childTasks.flatMap { it.getDependencyTasks() }
-        val targetTasks = childTasks + grandChildTasks
+        val greatGrandChildTasks = grandChildTasks.flatMap { it.getDependencyTasks() }
+        val targetTasks = childTasks + grandChildTasks + greatGrandChildTasks
 
         val result = mutableListOf<ProjectWithVariant>()
         for (targetTask in targetTasks) {
-            val matchResult = packageRenderscriptRegex.find(targetTask.name) ?: continue
-            if (2 <= matchResult.groupValues.size) {
+            var matchResult = packageRenderscriptRegex.find(targetTask.name)
+            if (matchResult != null && 2 <= matchResult.groupValues.size) {
+                val variantName = "${matchResult.groupValues[1][0].lowercase()}${matchResult.groupValues[1].substring(1)}"
+                result += ProjectWithVariant(targetTask.project, variantName)
+            }
+
+            matchResult = generateFeatureTransitiveDeps.find(targetTask.name)
+            if (matchResult != null && 2 <= matchResult.groupValues.size) {
                 val variantName = "${matchResult.groupValues[1][0].lowercase()}${matchResult.groupValues[1].substring(1)}"
                 result += ProjectWithVariant(targetTask.project, variantName)
             }
