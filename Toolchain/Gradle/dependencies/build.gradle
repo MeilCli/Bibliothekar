@@ -40,7 +40,7 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        greeting {
+        dependencies {
             id = 'net.meilcli.bibliothekar.toolchain.dependencies'
             implementationClass = 'net.meilcli.bibliothekar.toolchain.dependencies.DependenciesPlugin'
         }

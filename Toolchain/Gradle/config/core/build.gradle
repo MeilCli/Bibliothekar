@@ -25,7 +25,7 @@ bibliothekarDependencies {
 
 gradlePlugin {
     plugins {
-        greeting {
+        detekt {
             id = 'net.meilcli.bibliothekar.toolchain.config.detekt'
             implementationClass = 'net.meilcli.bibliothekar.toolchain.config.core.DetektPlugin'
         }

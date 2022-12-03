@@ -43,7 +43,7 @@ testing {
 
 gradlePlugin {
     plugins {
-        greeting {
+        android {
             id = 'net.meilcli.bibliothekar.extractor.plugin.android'
             implementationClass = 'net.meilcli.bibliothekar.extractor.plugin.android.BibliothekarPlugin'
         }

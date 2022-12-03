@@ -21,7 +21,7 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        greeting {
+        kotlin {
             id = 'net.meilcli.bibliothekar.toolchain.config.kotlin'
             implementationClass = 'net.meilcli.bibliothekar.toolchain.config.jvm.KotlinPlugin'
         }

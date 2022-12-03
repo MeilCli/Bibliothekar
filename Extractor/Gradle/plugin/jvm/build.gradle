@@ -35,7 +35,7 @@ testing {
 
 gradlePlugin {
     plugins {
-        greeting {
+        jvm {
             id = 'net.meilcli.bibliothekar.extractor.plugin.jvm'
             implementationClass = 'net.meilcli.bibliothekar.extractor.plugin.jvm.BibliothekarPlugin'
         }
