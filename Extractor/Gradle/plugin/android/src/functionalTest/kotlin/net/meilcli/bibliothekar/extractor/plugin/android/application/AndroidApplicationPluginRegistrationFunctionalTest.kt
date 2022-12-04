@@ -1,5 +1,6 @@
-package net.meilcli.bibliothekar.extractor.plugin.android
+package net.meilcli.bibliothekar.extractor.plugin.android.application
 
+import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.experimental.runners.Enclosed

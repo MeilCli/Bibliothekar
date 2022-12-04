@@ -1,5 +1,7 @@
-package net.meilcli.bibliothekar.extractor.plugin.android
+package net.meilcli.bibliothekar.extractor.plugin.android.dynamic
 
+import net.meilcli.bibliothekar.extractor.plugin.android.unifyLineBreak
+import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.Test
@@ -9,7 +11,7 @@ import org.junit.runner.RunWith
 import kotlin.test.assertTrue
 
 @RunWith(Enclosed::class)
-class AndroidApplicationPluginConfirmFunctionalTest {
+class AndroidDynamicFeaturePluginConfirmFunctionalTest {
 
     class TestSingleProject {
 
@@ -26,7 +28,7 @@ class AndroidApplicationPluginConfirmFunctionalTest {
             getBuildFile().writeText(
                 """
                     plugins {
-                        id('com.android.application') version '7.3.1'
+                        id('com.android.dynamic-feature') version '7.3.1'
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -96,13 +98,13 @@ class AndroidApplicationPluginConfirmFunctionalTest {
                             targetSdkVersion 32
                         }
                         namespace 'net.meilcli.bibliothekar.test'
+                        dynamicFeatures = [':child']
                     }
                     repositories {
                         mavenCentral()
                     }
                     dependencies {
                         implementation 'junit:junit:4.13.2'
-                        implementation project(':child')
                     }
                 """.trimIndent()
             )
@@ -110,7 +112,7 @@ class AndroidApplicationPluginConfirmFunctionalTest {
             getProject2BuildFile().writeText(
                 """
                     plugins {
-                        id('com.android.library') version '7.3.1'
+                        id('com.android.dynamic-feature') version '7.3.1'
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -126,6 +128,7 @@ class AndroidApplicationPluginConfirmFunctionalTest {
                     }
                     dependencies {
                         implementation 'junit:junit:4.13.2'
+                        implementation project(':parent')
                     }
                 """.trimIndent()
             )

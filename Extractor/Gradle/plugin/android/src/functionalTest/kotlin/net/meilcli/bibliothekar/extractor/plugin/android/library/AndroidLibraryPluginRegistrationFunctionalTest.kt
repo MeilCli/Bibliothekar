@@ -1,5 +1,6 @@
-package net.meilcli.bibliothekar.extractor.plugin.android
+package net.meilcli.bibliothekar.extractor.plugin.android.library
 
+import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.experimental.runners.Enclosed
@@ -10,7 +11,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(Enclosed::class)
-class AndroidDynamicFeaturePluginRegistrationFunctionalTest {
+class AndroidLibraryPluginRegistrationFunctionalTest {
 
     class TestBibliothekarExtractTaskRegistration {
 
@@ -27,7 +28,7 @@ class AndroidDynamicFeaturePluginRegistrationFunctionalTest {
             getBuildFile().writeText(
                 """
                     plugins {
-                        id('com.android.dynamic-feature') version '7.3.1'
+                        id('com.android.library') version '7.3.1'
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -70,7 +71,7 @@ class AndroidDynamicFeaturePluginRegistrationFunctionalTest {
             getBuildFile().writeText(
                 """
                     plugins {
-                        id('com.android.dynamic-feature') version '7.3.1'
+                        id('com.android.library') version '7.3.1'
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -111,7 +112,7 @@ class AndroidDynamicFeaturePluginRegistrationFunctionalTest {
             getBuildFile().writeText(
                 """
                     plugins {
-                        id('com.android.dynamic-feature') version '7.3.1'
+                        id('com.android.library') version '7.3.1'
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {

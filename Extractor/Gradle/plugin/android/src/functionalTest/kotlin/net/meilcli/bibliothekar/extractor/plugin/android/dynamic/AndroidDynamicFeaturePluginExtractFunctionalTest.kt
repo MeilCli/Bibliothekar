@@ -1,5 +1,6 @@
-package net.meilcli.bibliothekar.extractor.plugin.android
+package net.meilcli.bibliothekar.extractor.plugin.android.dynamic
 
+import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.Test
@@ -9,7 +10,7 @@ import org.junit.runner.RunWith
 import kotlin.test.assertNotNull
 
 @RunWith(Enclosed::class)
-class AndroidApplicationPluginExtractFunctionalTest {
+class AndroidDynamicFeaturePluginExtractFunctionalTest {
 
     class TestExtract {
 
@@ -26,7 +27,7 @@ class AndroidApplicationPluginExtractFunctionalTest {
             getBuildFile().writeText(
                 """
                     plugins {
-                        id('com.android.application') version '7.3.1'
+                        id('com.android.dynamic-feature') version '7.3.1'
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {

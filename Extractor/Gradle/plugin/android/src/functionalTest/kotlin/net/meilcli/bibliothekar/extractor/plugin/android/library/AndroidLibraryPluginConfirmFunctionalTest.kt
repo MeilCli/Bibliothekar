@@ -1,5 +1,7 @@
-package net.meilcli.bibliothekar.extractor.plugin.android
+package net.meilcli.bibliothekar.extractor.plugin.android.library
 
+import net.meilcli.bibliothekar.extractor.plugin.android.unifyLineBreak
+import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.Test
