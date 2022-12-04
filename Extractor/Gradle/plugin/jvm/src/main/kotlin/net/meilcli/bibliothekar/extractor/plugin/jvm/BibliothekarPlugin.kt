@@ -12,19 +12,45 @@ import org.gradle.api.plugins.JavaPlugin
 
 class BibliothekarPlugin : Plugin<Project> {
 
-    override fun apply(project: Project) {
-        project.setUpExtractTask()
+    private fun dependencyListConfigurationName(configuration: Configuration): String {
+        return "${configuration.name}DependenciesList"
+    }
 
+    override fun apply(project: Project) {
         if (project.plugins.hasPlugin(JavaPlugin::class.java)) {
+            project.setUpConfigurations()
+            project.setUpExtractTask()
             project.setUpReportTask()
             project.setUpConfirmTask()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is JavaPlugin) {
+                    project.setUpConfigurations()
+                    project.setUpExtractTask()
                     project.setUpReportTask()
                     project.setUpConfirmTask()
                 }
             }
+        }
+    }
+
+    private fun Project.setUpConfigurations() {
+        afterEvaluate {
+            configurations
+                .findByName(JavaPlugin.RUNTIME_ELEMENTS_CONFIGURATION_NAME)
+                ?.also { runtimeElementsConfiguration ->
+                    runtimeElementsConfiguration.extendsFrom
+                        .filter { it.isCanBeResolved.not() }
+                        .forEach {
+                            configurations.create(dependencyListConfigurationName(it)).apply {
+                                it.dependencies.forEach { dependency ->
+                                    dependencies.add(dependency)
+                                }
+                                isCanBeResolved = true
+                                resolve()
+                            }
+                        }
+                }
         }
     }
 
@@ -77,7 +103,8 @@ class BibliothekarPlugin : Plugin<Project> {
         if (configuration.isCanBeResolved) {
             return configuration
         }
-        return configurations.findByName("${configuration.name}DependenciesMetadata")
-            ?: throw BibliothekarException("cannot find resolvable configuration of ${configuration.name}")
+        return configurations.findByName("${configuration.name}DependenciesMetadata") // defined by Kotlin Plugin
+            ?: configurations.findByName(dependencyListConfigurationName(configuration))
+            ?: throw BibliothekarException("resolvable ${configuration.name} configuration cannot find")
     }
 }

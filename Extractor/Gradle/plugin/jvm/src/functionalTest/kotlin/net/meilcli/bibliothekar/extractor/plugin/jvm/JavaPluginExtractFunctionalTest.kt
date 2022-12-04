@@ -2,17 +2,16 @@ package net.meilcli.bibliothekar.extractor.plugin.jvm
 
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
+import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
-import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertNotNull
 
 @RunWith(Enclosed::class)
-class BibliothekarPluginFunctionalTest {
+class JavaPluginExtractFunctionalTest {
 
-    class TestBibliothekarExtractTaskRegistration {
+    class TestExtract {
 
         @get:Rule
         val tempFolder = TemporaryFolder()
@@ -27,22 +26,27 @@ class BibliothekarPluginFunctionalTest {
             getBuildFile().writeText(
                 """
                     plugins {
+                        id('java')
                         id('net.meilcli.bibliothekar.extractor.plugin.jvm')
                     }
-                    configurations.create("includingTest").setCanBeResolved(true)
-                    configurations.create("excludingTest").setCanBeResolved(false)
+                    repositories {
+                        mavenCentral()
+                    }
+                    dependencies {
+                        implementation 'junit:junit:4.13.2'
+                    }
                 """.trimIndent()
             )
 
             val runner = GradleRunner.create()
             runner.forwardOutput()
             runner.withPluginClasspath()
-            runner.withArguments("tasks")
+            runner.withArguments("implementationDependenciesListBibliothekarExtract", "--info")
+            runner.withDebug(true)
             runner.withProjectDir(getProjectDir())
             val result = runner.build()
 
-            assertTrue(result.output.contains("includingTestBibliothekarExtract - extract includingTest dependencies"))
-            assertFalse(result.output.contains("excludingTestBibliothekarExtract - extract excludingTest dependencies"))
+            assertNotNull("write\\s[1-9]\\soutputs\\sto".toRegex().find(result.output))
         }
     }
 }
