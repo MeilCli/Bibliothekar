@@ -47,7 +47,6 @@ class BibliothekarPlugin : Plugin<Project> {
                                     dependencies.add(dependency)
                                 }
                                 isCanBeResolved = true
-                                resolve()
                             }
                         }
                 }

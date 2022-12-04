@@ -1,4 +1,4 @@
-package net.meilcli.bibliothekar.extractor.plugin.jvm
+package net.meilcli.bibliothekar.extractor.plugin.android
 
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule

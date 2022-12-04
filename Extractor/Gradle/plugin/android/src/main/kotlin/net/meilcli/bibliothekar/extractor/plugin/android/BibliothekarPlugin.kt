@@ -16,42 +16,71 @@ import org.gradle.api.artifacts.ProjectDependency
 @Suppress("unused")
 class BibliothekarPlugin : Plugin<Project> {
 
-    override fun apply(project: Project) {
-        project.setUpExtractTask()
+    private fun dependencyListConfigurationName(configuration: Configuration): String {
+        return "${configuration.name}DependenciesList"
+    }
 
+    override fun apply(project: Project) {
         if (project.plugins.hasPlugin(LibraryPlugin::class.java)) {
-            project.setUpReportTask()
-            project.setUpConfirmTask()
+            project.setUpConfigurations()
+            project.setUpTasks()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is LibraryPlugin) {
-                    project.setUpReportTask()
-                    project.setUpConfirmTask()
+                    project.setUpConfigurations()
+                    project.setUpTasks()
                 }
             }
         }
         if (project.plugins.hasPlugin(AppPlugin::class.java)) {
-            project.setUpReportTask()
-            project.setUpConfirmTask()
+            project.setUpConfigurations()
+            project.setUpTasks()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is AppPlugin) {
-                    project.setUpReportTask()
-                    project.setUpConfirmTask()
+                    project.setUpConfigurations()
+                    project.setUpTasks()
                 }
             }
         }
         if (project.plugins.hasPlugin(DynamicFeaturePlugin::class.java)) {
-            project.setUpReportTask()
-            project.setUpConfirmTask()
+            project.setUpConfigurations()
+            project.setUpTasks()
         } else {
             project.plugins.whenPluginAdded {
                 if (it is DynamicFeaturePlugin) {
-                    project.setUpReportTask()
-                    project.setUpConfirmTask()
+                    project.setUpConfigurations()
+                    project.setUpTasks()
                 }
             }
         }
+    }
+
+    @Suppress("UnstableApiUsage")
+    private fun Project.setUpConfigurations() {
+        project.extensions.findByType(AndroidComponentsExtension::class.java)
+            ?.onVariants { variant ->
+                variant.runtimeConfiguration
+                    .extendsFrom
+                    .filter { it.isCanBeResolved.not() }
+                    .forEach {
+                        if (configurations.findByName(dependencyListConfigurationName(it)) != null) {
+                            return@forEach
+                        }
+                        configurations.create(dependencyListConfigurationName(it)).apply {
+                            it.dependencies.forEach { dependency ->
+                                dependencies.add(dependency)
+                            }
+                            isCanBeResolved = true
+                        }
+                    }
+            }
+    }
+
+    private fun Project.setUpTasks() {
+        setUpExtractTask()
+        setUpReportTask()
+        setUpConfirmTask()
     }
 
     private fun Project.setUpExtractTask() {
@@ -131,7 +160,8 @@ class BibliothekarPlugin : Plugin<Project> {
         if (configuration.isCanBeResolved) {
             return configuration
         }
-        return configurations.findByName("${configuration.name}DependenciesMetadata")
-            ?: throw BibliothekarException("cannot find resolvable configuration of ${configuration.name}")
+        return configurations.findByName("${configuration.name}DependenciesMetadata") // defined by Kotlin Plugin
+            ?: configurations.findByName(dependencyListConfigurationName(configuration))
+            ?: throw BibliothekarException("resolvable ${configuration.name} configuration cannot find")
     }
 }

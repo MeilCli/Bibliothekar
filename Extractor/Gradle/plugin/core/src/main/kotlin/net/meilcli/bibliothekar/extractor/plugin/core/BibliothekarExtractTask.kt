@@ -81,6 +81,8 @@ open class BibliothekarExtractTask : DefaultTask() {
             outputDirectory.mkdirs()
         }
 
+        configuration.resolve()
+
         val dependencies = dependencyLoader.load(configuration)
         val poms = dependencies.map { Pair(it, pomReader.read(it)) }
             .onEach {
