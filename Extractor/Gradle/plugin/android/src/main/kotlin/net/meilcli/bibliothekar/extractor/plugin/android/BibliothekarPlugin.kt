@@ -71,7 +71,7 @@ class BibliothekarPlugin : Plugin<Project> {
         project.extensions.findByType(AndroidComponentsExtension::class.java)
             ?.onVariants { variant ->
                 tasks.register(BibliothekarReportTask.taskName(variant.name), BibliothekarReportTask::class.java) { task ->
-                    task.setup()
+                    task.setup(this)
 
                     val dependencyConfigurations = variant.runtimeConfiguration
                         .extendsFrom

@@ -46,7 +46,7 @@ class BibliothekarPlugin : Plugin<Project> {
                 .findByName(JavaPlugin.RUNTIME_ELEMENTS_CONFIGURATION_NAME)
                 ?.also { runtimeElementsConfiguration ->
                     tasks.register(BibliothekarReportTask.taskName(), BibliothekarReportTask::class.java) { task ->
-                        task.setup()
+                        task.setup(this)
 
                         val dependencyConfigurations = runtimeElementsConfiguration.extendsFrom
                             .map { getDependencyDefinedConfiguration(it) }
