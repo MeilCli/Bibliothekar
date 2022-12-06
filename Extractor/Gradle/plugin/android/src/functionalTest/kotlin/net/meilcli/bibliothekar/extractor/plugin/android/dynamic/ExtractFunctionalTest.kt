@@ -1,6 +1,6 @@
-package net.meilcli.bibliothekar.extractor.plugin.android.application
+package net.meilcli.bibliothekar.extractor.plugin.android.dynamic
 
-import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
+import net.meilcli.bibliothekar.extractor.plugin.android.TestingProject
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.Test
@@ -10,24 +10,21 @@ import org.junit.runner.RunWith
 import kotlin.test.assertNotNull
 
 @RunWith(Enclosed::class)
-class AndroidApplicationPluginExtractFunctionalTest {
+class ExtractFunctionalTest {
 
     class TestExtract {
 
         @get:Rule
-        val tempFolder = TemporaryFolder()
-
-        private fun getProjectDir() = tempFolder.root
-        private fun getBuildFile() = getProjectDir().resolve("build.gradle")
-        private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
+        val temporaryFolder = TemporaryFolder()
 
         @Test
         fun test() {
-            getSettingsFile().writeAndroidSettingText("")
-            getBuildFile().writeText(
+            val testingProject = TestingProject.SingleChildModule(temporaryFolder.root)
+            testingProject.setup()
+            testingProject.writeProject1BuildGradle(
                 """
                     plugins {
-                        id('com.android.application') version '7.3.1'
+                        id('com.android.dynamic-feature')
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -49,10 +46,9 @@ class AndroidApplicationPluginExtractFunctionalTest {
 
             val runner = GradleRunner.create()
             runner.forwardOutput()
-            runner.withPluginClasspath()
-            runner.withArguments("implementationDependenciesListBibliothekarExtract", "--info")
+            runner.withArguments(testingProject.getProject1TaskName("implementationDependenciesListBibliothekarExtract"), "--info")
             runner.withDebug(true)
-            runner.withProjectDir(getProjectDir())
+            runner.withProjectDir(testingProject.getProjectDirectory())
             val result = runner.build()
 
             assertNotNull("write\\s[1-9]\\soutputs\\sto".toRegex().find(result.output))

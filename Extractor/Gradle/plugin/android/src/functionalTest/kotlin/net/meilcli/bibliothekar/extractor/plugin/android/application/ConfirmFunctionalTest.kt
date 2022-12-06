@@ -1,7 +1,7 @@
-package net.meilcli.bibliothekar.extractor.plugin.android.dynamic
+package net.meilcli.bibliothekar.extractor.plugin.android.application
 
+import net.meilcli.bibliothekar.extractor.plugin.android.TestingProject
 import net.meilcli.bibliothekar.extractor.plugin.android.unifyLineBreak
-import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.Test
@@ -11,24 +11,21 @@ import org.junit.runner.RunWith
 import kotlin.test.assertTrue
 
 @RunWith(Enclosed::class)
-class AndroidDynamicFeaturePluginConfirmFunctionalTest {
+class ConfirmFunctionalTest {
 
     class TestSingleProject {
 
         @get:Rule
-        val tempFolder = TemporaryFolder()
-
-        private fun getProjectDir() = tempFolder.root
-        private fun getBuildFile() = getProjectDir().resolve("build.gradle")
-        private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
+        val temporaryFolder = TemporaryFolder()
 
         @Test
         fun test() {
-            getSettingsFile().writeAndroidSettingText("")
-            getBuildFile().writeText(
+            val testingProject = TestingProject.SingleChildModule(temporaryFolder.root)
+            testingProject.setup()
+            testingProject.writeProject1BuildGradle(
                 """
                     plugins {
-                        id('com.android.dynamic-feature') version '7.3.1'
+                        id('com.android.application')
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -50,9 +47,8 @@ class AndroidDynamicFeaturePluginConfirmFunctionalTest {
 
             val runner = GradleRunner.create()
             runner.forwardOutput()
-            runner.withPluginClasspath()
-            runner.withArguments("debugBibliothekarConfirm")
-            runner.withProjectDir(getProjectDir())
+            runner.withArguments(testingProject.getProject1TaskName("debugBibliothekarConfirm"))
+            runner.withProjectDir(testingProject.getProjectDirectory())
             val result = runner.build()
 
             assertTrue(result.output.contains("debugBibliothekarReport"), result.output)
@@ -66,53 +62,17 @@ class AndroidDynamicFeaturePluginConfirmFunctionalTest {
     class TestDualProject {
 
         @get:Rule
-        val tempFolder = TemporaryFolder()
-
-        private fun getProjectDir() = tempFolder.root
-        private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
-        private fun getProject1Dir() = getProjectDir().resolve("parent")
-        private fun getProject1BuildFile() = getProjectDir().resolve("parent/build.gradle")
-        private fun getProject2Dir() = getProjectDir().resolve("child")
-        private fun getProject2BuildFile() = getProjectDir().resolve("child/build.gradle")
+        val temporaryFolder = TemporaryFolder()
 
         @Suppress("detekt.LongMethod")
         @Test
         fun test() {
-            getSettingsFile().writeAndroidSettingText(
-                """
-                    include(':parent')
-                    include(':child')
-                """.trimIndent()
-            )
-            getProject1Dir().mkdirs()
-            getProject1BuildFile().writeText(
+            val testingProject = TestingProject.DualChildModule(temporaryFolder.root)
+            testingProject.setup()
+            testingProject.writeProject1BuildGradle(
                 """
                     plugins {
-                        id('com.android.application') version '7.3.1'
-                        id('net.meilcli.bibliothekar.extractor.plugin.android')
-                    }
-                    android {
-                        compileSdkVersion 32
-                        defaultConfig {
-                            minSdkVersion 21
-                            targetSdkVersion 32
-                        }
-                        namespace 'net.meilcli.bibliothekar.test'
-                        dynamicFeatures = [':child']
-                    }
-                    repositories {
-                        mavenCentral()
-                    }
-                    dependencies {
-                        implementation 'junit:junit:4.13.2'
-                    }
-                """.trimIndent()
-            )
-            getProject2Dir().mkdirs()
-            getProject2BuildFile().writeText(
-                """
-                    plugins {
-                        id('com.android.dynamic-feature') version '7.3.1'
+                        id('com.android.application')
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -128,20 +88,41 @@ class AndroidDynamicFeaturePluginConfirmFunctionalTest {
                     }
                     dependencies {
                         implementation 'junit:junit:4.13.2'
-                        implementation project(':parent')
+                        implementation project('${testingProject.getProject2Name()}')
+                    }
+                """.trimIndent()
+            )
+            testingProject.writeProject2BuildGradle(
+                """
+                    plugins {
+                        id('com.android.library')
+                        id('net.meilcli.bibliothekar.extractor.plugin.android')
+                    }
+                    android {
+                        compileSdkVersion 32
+                        defaultConfig {
+                            minSdkVersion 21
+                            targetSdkVersion 32
+                        }
+                        namespace 'net.meilcli.bibliothekar.test'
+                    }
+                    repositories {
+                        mavenCentral()
+                    }
+                    dependencies {
+                        implementation 'junit:junit:4.13.2'
                     }
                 """.trimIndent()
             )
 
             val runner = GradleRunner.create()
             runner.forwardOutput()
-            runner.withPluginClasspath()
-            runner.withArguments(":parent:debugBibliothekarConfirm")
-            runner.withProjectDir(getProjectDir())
+            runner.withArguments(testingProject.getProject1TaskName("debugBibliothekarConfirm"))
+            runner.withProjectDir(testingProject.getProjectDirectory())
             val result = runner.build()
 
             val expectParent = """
-                :parent
+                ${testingProject.getProject1Name()}
                 debugBibliothekarReport
                 debugRuntimeOnlyDependenciesListBibliothekarExtract
                 debugImplementationDependenciesListBibliothekarExtract
@@ -149,7 +130,7 @@ class AndroidDynamicFeaturePluginConfirmFunctionalTest {
                 implementationDependenciesListBibliothekarExtract
             """.trimIndent().unifyLineBreak()
             val expectChild = """
-                :parent
+                ${testingProject.getProject2Name()}
                 debugBibliothekarReport
                 debugRuntimeOnlyDependenciesListBibliothekarExtract
                 debugImplementationDependenciesListBibliothekarExtract

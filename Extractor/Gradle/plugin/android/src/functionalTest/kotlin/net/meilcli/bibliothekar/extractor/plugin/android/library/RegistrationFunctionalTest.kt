@@ -1,6 +1,6 @@
 package net.meilcli.bibliothekar.extractor.plugin.android.library
 
-import net.meilcli.bibliothekar.extractor.plugin.android.writeAndroidSettingText
+import net.meilcli.bibliothekar.extractor.plugin.android.TestingProject
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.experimental.runners.Enclosed
@@ -11,24 +11,21 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(Enclosed::class)
-class AndroidLibraryPluginRegistrationFunctionalTest {
+class RegistrationFunctionalTest {
 
     class TestBibliothekarExtractTaskRegistration {
 
         @get:Rule
-        val tempFolder = TemporaryFolder()
-
-        private fun getProjectDir() = tempFolder.root
-        private fun getBuildFile() = getProjectDir().resolve("build.gradle")
-        private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
+        val temporaryFolder = TemporaryFolder()
 
         @Test
         fun test() {
-            getSettingsFile().writeAndroidSettingText("")
-            getBuildFile().writeText(
+            val testingProject = TestingProject.SingleChildModule(temporaryFolder.root)
+            testingProject.setup()
+            testingProject.writeProject1BuildGradle(
                 """
                     plugins {
-                        id('com.android.library') version '7.3.1'
+                        id('com.android.library')
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -46,9 +43,8 @@ class AndroidLibraryPluginRegistrationFunctionalTest {
 
             val runner = GradleRunner.create()
             runner.forwardOutput()
-            runner.withPluginClasspath()
-            runner.withArguments("tasks")
-            runner.withProjectDir(getProjectDir())
+            runner.withArguments(testingProject.getProject1TaskName("tasks"))
+            runner.withProjectDir(testingProject.getProjectDirectory())
             val result = runner.build()
 
             assertTrue(result.output.contains("includingTestBibliothekarExtract - extract includingTest dependencies"), result.output)
@@ -59,19 +55,16 @@ class AndroidLibraryPluginRegistrationFunctionalTest {
     class TestBibliothekarReportTaskRegistration {
 
         @get:Rule
-        val tempFolder = TemporaryFolder()
-
-        private fun getProjectDir() = tempFolder.root
-        private fun getBuildFile() = getProjectDir().resolve("build.gradle")
-        private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
+        val temporaryFolder = TemporaryFolder()
 
         @Test
         fun test() {
-            getSettingsFile().writeAndroidSettingText("")
-            getBuildFile().writeText(
+            val testingProject = TestingProject.SingleChildModule(temporaryFolder.root)
+            testingProject.setup()
+            testingProject.writeProject1BuildGradle(
                 """
                     plugins {
-                        id('com.android.library') version '7.3.1'
+                        id('com.android.library')
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -87,9 +80,8 @@ class AndroidLibraryPluginRegistrationFunctionalTest {
 
             val runner = GradleRunner.create()
             runner.forwardOutput()
-            runner.withPluginClasspath()
-            runner.withArguments("tasks")
-            runner.withProjectDir(getProjectDir())
+            runner.withArguments(testingProject.getProject1TaskName("tasks"))
+            runner.withProjectDir(testingProject.getProjectDirectory())
             val result = runner.build()
 
             assertTrue(result.output.contains("debugBibliothekarReport"), result.output)
@@ -100,19 +92,16 @@ class AndroidLibraryPluginRegistrationFunctionalTest {
     class TestBibliothekarConfirmTaskRegistration {
 
         @get:Rule
-        val tempFolder = TemporaryFolder()
-
-        private fun getProjectDir() = tempFolder.root
-        private fun getBuildFile() = getProjectDir().resolve("build.gradle")
-        private fun getSettingsFile() = getProjectDir().resolve("settings.gradle")
+        val temporaryFolder = TemporaryFolder()
 
         @Test
         fun test() {
-            getSettingsFile().writeAndroidSettingText("")
-            getBuildFile().writeText(
+            val testingProject = TestingProject.SingleChildModule(temporaryFolder.root)
+            testingProject.setup()
+            testingProject.writeProject1BuildGradle(
                 """
                     plugins {
-                        id('com.android.library') version '7.3.1'
+                        id('com.android.library')
                         id('net.meilcli.bibliothekar.extractor.plugin.android')
                     }
                     android {
@@ -128,9 +117,8 @@ class AndroidLibraryPluginRegistrationFunctionalTest {
 
             val runner = GradleRunner.create()
             runner.forwardOutput()
-            runner.withPluginClasspath()
-            runner.withArguments("tasks")
-            runner.withProjectDir(getProjectDir())
+            runner.withArguments(testingProject.getProject1TaskName("tasks"))
+            runner.withProjectDir(testingProject.getProjectDirectory())
             val result = runner.build()
 
             assertTrue(result.output.contains("debugBibliothekarConfirm"), result.output)
