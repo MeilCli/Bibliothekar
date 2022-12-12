@@ -35,6 +35,7 @@
                 <projects>
                   <project path="$PROJECT_DIR$/Extractor/Gradle/plugin" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/plugin/android" />
+                  <project path="$PROJECT_DIR$/Extractor/Gradle/plugin/bundled" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/plugin/core" />
                   <project path="$PROJECT_DIR$/Extractor/Gradle/plugin/jvm" />
                 </projects>
@@ -64,6 +65,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/plugin" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/plugin/android" />
+            <option value="$PROJECT_DIR$/Extractor/Gradle/plugin/bundled" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/plugin/core" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/plugin/jvm" />
             <option value="$PROJECT_DIR$/Extractor/Gradle/sandbox" />

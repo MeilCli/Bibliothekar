@@ -1,0 +1,60 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'io.gitlab.arturbosch.detekt'
+    id 'net.meilcli.bibliothekar.toolchain.dependencies'
+    id 'net.meilcli.bibliothekar.toolchain.config.kotlin'
+    id 'net.meilcli.bibliothekar.toolchain.config.detekt'
+}
+
+import net.meilcli.bibliothekar.config.Dependencies
+
+repositories {
+    google()
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':jvm')
+    implementation project(':android')
+    implementation Dependencies.ComAndroidToolsBuild.Gradle
+    implementation Dependencies.OrgJetbrainsKotlin.KotlinGradlePlugin
+}
+
+testing {
+    suites {
+        test {
+            useKotlinTest()
+        }
+
+        functionalTest(JvmTestSuite) {
+            useKotlinTest()
+
+            dependencies {
+                implementation project
+            }
+
+            targets {
+                all {
+                    testTask.configure { shouldRunAfter(test) }
+                }
+            }
+        }
+    }
+}
+
+gradlePlugin {
+    plugins {
+        android {
+            id = 'net.meilcli.bibliothekar.extractor.plugin.bundled'
+            implementationClass = 'net.meilcli.bibliothekar.extractor.plugin.bundled.BibliothekarPlugin'
+        }
+    }
+}
+
+gradlePlugin.testSourceSets(sourceSets.functionalTest)
+
+tasks.named('check') {
+    dependsOn(testing.suites.functionalTest)
+}
