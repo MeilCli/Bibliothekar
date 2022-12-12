@@ -29,9 +29,20 @@ subprojects {
 }
 
 tasks.register("check") {
-    dependsOn ':jvm:check'
-    dependsOn ':jvm-child:check'
-    dependsOn ':jvm-nest:jvm-nested:check'
-    dependsOn ':android-library:check'
-    dependsOn ':android-library-child:check'
+    subprojects.forEach {
+        dependsOn "${it.path}:check"
+    }
 }
+
+tasks.register("clean") {
+    subprojects.forEach {
+        dependsOn "${it.path}:clean"
+    }
+}
+
+tasks.register("assemble") {
+    subprojects.forEach {
+        dependsOn "${it.path}:assemble"
+    }
+}
+

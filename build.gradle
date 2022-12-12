@@ -15,3 +15,11 @@ tasks.register("detekt", ReportMergeTask) { mergeTask ->
 tasks.register("check") {
     dependsOn gradle.includedBuilds*.task(":check")
 }
+
+tasks.register("clean") {
+    dependsOn gradle.includedBuilds*.task(":clean")
+}
+
+tasks.register("assemble") {
+    dependsOn gradle.includedBuilds*.task(":assemble")
+}

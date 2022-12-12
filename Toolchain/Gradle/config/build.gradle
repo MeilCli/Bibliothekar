@@ -31,3 +31,15 @@ tasks.register("check") {
     dependsOn ':jvm:check'
     dependsOn ':android:check'
 }
+
+tasks.register("clean") {
+    dependsOn ':core:clean'
+    dependsOn ':jvm:clean'
+    dependsOn ':android:clean'
+}
+
+tasks.register("assemble") {
+    dependsOn ':core:assemble'
+    dependsOn ':jvm:assemble'
+    dependsOn ':android:assemble'
+}

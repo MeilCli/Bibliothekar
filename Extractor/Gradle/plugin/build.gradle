@@ -28,7 +28,19 @@ subprojects {
 }
 
 tasks.register("check") {
-    dependsOn ':core:check'
-    dependsOn ':jvm:check'
-    dependsOn ':android:check'
+    subprojects.forEach {
+        dependsOn "${it.path}:check"
+    }
+}
+
+tasks.register("clean") {
+    subprojects.forEach {
+        dependsOn "${it.path}:clean"
+    }
+}
+
+tasks.register("assemble") {
+    subprojects.forEach {
+        dependsOn "${it.path}:assemble"
+    }
 }

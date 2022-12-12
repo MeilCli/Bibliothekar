@@ -29,3 +29,11 @@ subprojects {
 tasks.register("check") {
     dependsOn ':dependencies:check'
 }
+
+tasks.register("clean") {
+    dependsOn ':dependencies:clean'
+}
+
+tasks.register("assemble") {
+    dependsOn ':dependencies:assemble'
+}
