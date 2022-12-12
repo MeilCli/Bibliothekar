@@ -37,7 +37,7 @@ open class BibliothekarReportTask : DefaultTask() {
         this.group = TaskConstants.bibliothekarGroup
         this.outputDirectory = project.buildDir
             .toPath()
-            .resolve(Paths.get("output/bibliothekar/report/${name}"))
+            .resolve(Paths.get("output/bibliothekar/report/$name"))
             .toFile()
     }
 
