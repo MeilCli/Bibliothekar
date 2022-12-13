@@ -7,10 +7,3 @@ updates:
     reviewers:
       - "MeilCli"
     open-pull-requests-limit: 20
-  - package-ecosystem: "gradle"
-    directory: "/Toolchain/Gradle/dependencies"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - "MeilCli"
-    open-pull-requests-limit: 20
