@@ -8,6 +8,7 @@ import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import kotlin.test.assertTrue
 
+// FixMe: change to use TestingProject
 @RunWith(Enclosed::class)
 class KotlinPluginConfirmFunctionalTest {
 

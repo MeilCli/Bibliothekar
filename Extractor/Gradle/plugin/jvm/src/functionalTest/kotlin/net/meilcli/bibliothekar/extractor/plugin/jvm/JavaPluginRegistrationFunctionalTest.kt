@@ -9,6 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+// FixMe: change to use TestingProject
 @RunWith(Enclosed::class)
 class JavaPluginRegistrationFunctionalTest {
 
