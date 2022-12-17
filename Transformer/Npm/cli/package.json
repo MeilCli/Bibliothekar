@@ -1,0 +1,40 @@
+{
+    "name": "bibliothekar-transformer-cli",
+    "version": "0.0.1",
+    "description": "Licenses of dependencies tool",
+    "keywords": [
+        "license",
+        "dependencies"
+    ],
+    "homepage": "https://github.com/MeilCli/Bibliothekar",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "files": [
+        "lib"
+    ],
+    "scripts": {
+        "cli": "ts-node src/index.ts",
+        "test": "jest"
+    },
+    "author": "MeilCli",
+    "license": "MIT",
+    "jest": {
+        "clearMocks": true,
+        "moduleFileExtensions": [
+            "js",
+            "ts"
+        ],
+        "testEnvironment": "node",
+        "testMatch": [
+            "**/*.test.ts"
+        ],
+        "testRunner": "jest-circus/runner",
+        "transform": {
+            "^.+\\.ts$": "ts-jest"
+        },
+        "verbose": true
+    },
+    "dependencies": {
+        "bibliothekar-transformer-core": "^0.0.1"
+    }
+}

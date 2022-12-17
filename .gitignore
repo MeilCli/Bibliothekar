@@ -1,7 +1,12 @@
 # General
 build
+lib
 
 # Gradle
 .gradle
 local.properties
 
+# npm
+node_modules
+tsconfig.tsbuildinfo
+eslint_report.json
