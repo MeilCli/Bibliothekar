@@ -1,22 +1,24 @@
 name: Automerge
 
 on:
-  pull_request_target:
+  workflow_run:
+    workflows:
+      - CI
     types:
-      - opened
-      - synchronized
-      - reopened
-      - edited
-      - labeled
-      - unlabeled
-      - ready_for_review
+      - completed
+  check_suite:
+    types:
+      - completed
+  pull_request_review:
+    types:
+      - submitted
 
 jobs:
   automerge:
     if: github.event.review.state == 'approved' || !github.event.review
     runs-on: ubuntu-latest
     steps:
-      - uses: reitermarkus/automerge@v2
+      - uses: reitermarkus/automerge@v1
         with:
           token: ${{ secrets.MEILCLI_BOT }}
           merge-method: merge
