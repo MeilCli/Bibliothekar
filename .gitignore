@@ -6,7 +6,7 @@ lib
 .gradle
 local.properties
 
-# npm
+# NodeJs
 node_modules
 tsconfig.tsbuildinfo
 eslint_report.json

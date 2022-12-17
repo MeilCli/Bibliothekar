@@ -10,12 +10,12 @@
         "lint": "eslint **/src/**/*.ts",
         "lint:report": "eslint --output-file eslint_report.json --format json --ext .ts **/src/**/*.ts",
         "reference": "workspaces-to-typescript-project-references",
-        "transformer:cli": "npm run build && npm link -w Transformer/Npm/cli && npm run cli -w Transformer/Npm/cli"
+        "transformer:cli": "npm run build && npm link -w Transformer/NodeJs/cli && npm run cli -w Transformer/NodeJs/cli"
     },
     "author": "MeilCli",
     "license": "MIT",
     "workspaces": [
-        "Transformer/Npm/*"
+        "Transformer/NodeJs/*"
     ],
     "devDependencies": {
         "@monorepo-utils/workspaces-to-typescript-project-references": "^2.9.0",
