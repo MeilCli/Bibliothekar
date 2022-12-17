@@ -24,6 +24,7 @@ jobs:
       - name: Grant permission
         run: chmod +x gradlew
       - run: ./gradlew assemble
+      - run: ./gradlew check
   build-npm:
     runs-on: ubuntu-latest
     steps:
