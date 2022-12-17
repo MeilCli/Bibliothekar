@@ -8,3 +8,4 @@ So if you think contributing to Bibliothekar, you prepare development-environmen
 |:--|:--|:--|:--|
 |Markdown|N/A|VS Code, GitHub|[Markdown Writing](./Markdown.md)|
 |Kotlin|Gradle|Android Studio, IntelliJ IDEA|[Gradle Development](./Gradle.md)|
+|TypeScript|NodeJs|VSCode|[NodeJs Development](./NodeJs.md)|
