@@ -6,6 +6,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
+import org.gradle.api.tasks.TaskProvider
 import java.io.File
 
 class DetektPlugin : Plugin<Project> {
@@ -26,6 +27,13 @@ class DetektPlugin : Plugin<Project> {
             .forEach { moduleDependency ->
                 moduleDependency.exclude(mapOf("group" to "org.slf4j"))
             }
+        project.afterEvaluate {
+            project.tasks
+                .named("check")
+                .configure {
+                    it.setDependsOn(it.dependsOn.filterNot { it is TaskProvider<*> && it.name == "detekt" })
+                }
+        }
     }
 
     // need rootDir but Project.rootDir is root of composite module
