@@ -42,9 +42,9 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: build-gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: lint-gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            build-gradle-${{ runner.os }}-
+            lint-gradle-${{ runner.os }}-
       - name: Grant permission
         run: chmod +x gradlew
       - run: ./gradlew detekt
