@@ -52,6 +52,11 @@ gradlePlugin {
 
 gradlePlugin.testSourceSets(sourceSets.functionalTest)
 
+tasks.withType(Test).configureEach {
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    forkEvery = 10
+}
+
 tasks.named('check') {
     dependsOn(testing.suites.functionalTest)
 }
