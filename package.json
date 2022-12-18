@@ -1,7 +1,7 @@
 {
     "name": "bibliothekar",
     "version": "0.0.1",
-    "description": "Licenses of dependencies tool",
+    "description": "A tool of notice and verify licenses of dependencies",
     "private": true,
     "main": "main.js",
     "scripts": {
