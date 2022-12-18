@@ -9,9 +9,10 @@
         "test": "npm run build && npm run test --workspaces",
         "lint": "eslint **/src/**/*.ts",
         "lint:report": "eslint --output-file eslint_report.json --format json --ext .ts **/src/**/*.ts",
+        "generate:guard": "npm run transformer:core:generate:guard && eslint --fix **/src/**/*.guard.ts",
         "reference": "workspaces-to-typescript-project-references",
         "transformer:cli": "npm run build && npm link -w Transformer/NodeJs/cli && npm run cli -w Transformer/NodeJs/cli",
-        "transformer:core:generate:guard": "npm run generate:guard -w Transformer/NodeJs/core && eslint --fix **/src/**/*.guard.ts"
+        "transformer:core:generate:guard": "npm run generate:guard -w Transformer/NodeJs/core"
     },
     "author": "MeilCli",
     "license": "MIT",

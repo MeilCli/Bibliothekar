@@ -19,3 +19,6 @@ Bibliothekar is using TypeScript for NodeJs development.
   - Acronym word can use, but don't use word that don't found Google-search
     - Regardless of the number of letters, it is treated as one word.
     - for example: `HtmlLogger`, `XmlLogger`
+
+## Other
+- if auto-guard marked file changed, run `npm run generate:guard`
