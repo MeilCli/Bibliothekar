@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: reitermarkus/automerge@v1
+        continue-on-error: true
         with:
           token: ${{ secrets.MEILCLI_BOT }}
           merge-method: merge
