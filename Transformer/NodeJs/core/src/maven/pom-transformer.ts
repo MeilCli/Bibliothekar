@@ -5,6 +5,7 @@ import { Pom } from "./pom";
 
 export class PomTransformer implements Transformer<Pom> {
     transform(value: Pom): Notice {
+        const a = "";
         const packageId = `${value.group}:${value.artifact}`;
         const groupId = value.group;
         const name = value.name;
