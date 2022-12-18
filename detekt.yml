@@ -1,45 +1,47 @@
 build:
-    maxIssues: 1000
+  maxIssues: 1000
 
 style:
-    MaxLineLength:
-        active: true
-        maxLineLength: 140
-    UseOrEmpty:
-        active: false
-    WildcardImport:
-        active: false
-    ReturnCount:
-        active: true
-        max: 5
-    ThrowsCount:
-        active: true
-        max: 5
-    LoopWithTooManyJumpStatements:
-        active: true
-        maxJumpCount: 5
-
+  excludes: '**/build/generated/**'
+  MaxLineLength:
+    active: true
+    maxLineLength: 140
+  UseOrEmpty:
+    active: false
+  WildcardImport:
+    active: false
+  ReturnCount:
+    active: true
+    max: 5
+  ThrowsCount:
+    active: true
+    max: 5
+  LoopWithTooManyJumpStatements:
+    active: true
+    maxJumpCount: 5
 
 formatting:
-    MaximumLineLength:
-        active: true
-        maxLineLength: 140
-    ArgumentListWrapping:
-        active: true
-        maxLineLength: 140
-    NoWildcardImports:
-        active: false
+  excludes: '**/build/generated/**'
+  MaximumLineLength:
+    active: true
+    maxLineLength: 140
+  ArgumentListWrapping:
+    active: true
+    maxLineLength: 140
+  NoWildcardImports:
+    active: false
 
 naming:
-    ClassNaming:
-        classPattern: '^[A-Z]?([A-Z][a-z0-9]+)+[A-Z]?$'
-    EnumNaming:
-        enumEntryPattern: '^[A-Z]?([A-Z][a-z0-9]+)+[A-Z]?$'
-    ObjectPropertyNaming:
-        constantPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
-        propertyPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
-        privatePropertyPattern: '^_?[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
-    TopLevelPropertyNaming:
-        constantPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
-        propertyPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
-        privatePropertyPattern: '^_?[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+  excludes: '**/build/generated/**'
+  ClassNaming:
+    classPattern: '^[A-Z]?([A-Z][a-z0-9]+)+[A-Z]?$'
+  EnumNaming:
+    enumEntryPattern: '^[A-Z]?([A-Z][a-z0-9]+)+[A-Z]?$'
+  ObjectPropertyNaming:
+    constantPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+    propertyPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+    privatePropertyPattern: '^_?[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+  TopLevelPropertyNaming:
+    constantPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+    propertyPattern: '^[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'
+    privatePropertyPattern: '^_?[a-z]+[0-9]*([A-Z][a-z0-9]+)*[A-Z]?$'

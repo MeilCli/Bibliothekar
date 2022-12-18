@@ -25,6 +25,12 @@ jobs:
         run: chmod +x gradlew
       - run: ./gradlew assemble
       - run: ./gradlew check
+      - run: ./gradlew detekt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: detekt_result
+          path: |
+            build/reports/detekt/merge.xml
   build-node-js:
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +52,7 @@ jobs:
         continue-on-error: true
       - uses: actions/upload-artifact@v3
         with:
-          name: result
+          name: eslint_result
           path: |
             eslint_report.json
   build:
