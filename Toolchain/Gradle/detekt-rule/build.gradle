@@ -36,3 +36,7 @@ tasks.named("detekt").configure {
         xml.outputLocation.set(file("build/reports/detekt/merge.xml"))
     }
 }
+
+tasks.register("testAll") {
+    dependsOn ':test'
+}

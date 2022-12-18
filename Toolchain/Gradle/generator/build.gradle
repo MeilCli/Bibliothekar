@@ -37,3 +37,7 @@ tasks.register("clean") {
 tasks.register("assemble") {
     dependsOn ':dependencies:assemble'
 }
+
+tasks.register("testAll") {
+    dependsOn ':dependencies:test'
+}

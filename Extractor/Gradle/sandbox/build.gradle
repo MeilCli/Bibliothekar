@@ -46,3 +46,8 @@ tasks.register("assemble") {
     }
 }
 
+tasks.register("testAll") {
+    subprojects.forEach {
+        dependsOn "${it.path}:test"
+    }
+}

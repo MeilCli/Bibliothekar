@@ -15,3 +15,10 @@ tasks.register("assemble") {
         dependsOn "${it.path}:assemble"
     }
 }
+
+tasks.register("test") {
+    subprojects.forEach {
+        dependsOn "${it.path}:test"
+    }
+}
+

@@ -28,7 +28,7 @@ jobs:
       - name: Grant permission
         run: chmod +x gradlew
       - run: ./gradlew assemble
-      - run: ./gradlew check
+      - run: ./gradlew testAll
   lint-gradle:
     runs-on: ubuntu-latest
     steps:

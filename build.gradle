@@ -23,3 +23,7 @@ tasks.register("clean") {
 tasks.register("assemble") {
     dependsOn gradle.includedBuilds*.task(":assemble")
 }
+
+tasks.register("testAll") {
+    dependsOn gradle.includedBuilds*.task(":testAll")
+}

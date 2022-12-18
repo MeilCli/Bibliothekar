@@ -44,3 +44,10 @@ tasks.register("assemble") {
         dependsOn "${it.path}:assemble"
     }
 }
+
+tasks.register("testAll") {
+    subprojects.forEach {
+        dependsOn "${it.path}:test"
+        dependsOn "${it.path}:functionalTest"
+    }
+}

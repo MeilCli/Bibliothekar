@@ -43,3 +43,9 @@ tasks.register("assemble") {
     dependsOn ':jvm:assemble'
     dependsOn ':android:assemble'
 }
+
+tasks.register("testAll") {
+    dependsOn ':core:test'
+    dependsOn ':jvm:test'
+    dependsOn ':android:test'
+}
