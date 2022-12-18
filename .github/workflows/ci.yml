@@ -26,11 +26,12 @@ jobs:
       - run: ./gradlew assemble
       - run: ./gradlew check
       - run: ./gradlew detekt
+      - run: mv build/reports/detekt/merge.xml detekt_report.xml
       - uses: actions/upload-artifact@v3
         with:
           name: detekt_result
           path: |
-            build/reports/detekt/merge.xml
+            detekt_report.xml
   build-node-js:
     runs-on: ubuntu-latest
     steps:
