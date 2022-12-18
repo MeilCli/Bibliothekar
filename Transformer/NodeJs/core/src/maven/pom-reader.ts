@@ -7,6 +7,7 @@ const pomFileName = "pom.json";
 
 export class PomReader implements Reader<Pom> {
     read(directory: string): Pom[] {
+        const a = "";
         if (fs.existsSync(directory) == false) {
             throw Error(`${directory} cannot found`);
         }
