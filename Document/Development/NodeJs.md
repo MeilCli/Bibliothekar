@@ -10,6 +10,10 @@ Bibliothekar is using TypeScript for NodeJs development.
    - Install-required: 
      - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
      - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+1. Install Node.js
+   - install version is writen at .nvmrc
+   - if you use nvm, you can only execute `nvm use`
+   - if you use [nvm-windows](https://github.com/coreybutler/nvm-windows), you can only execute `nvm use $(Get-Content .nvmrc)`
 
 ## Coding convention
 ### Naming
