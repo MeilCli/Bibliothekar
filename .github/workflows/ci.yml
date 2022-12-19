@@ -104,7 +104,7 @@ jobs:
         uses: dependabot/fetch-metadata@v1.1.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/github-script
+      - uses: actions/github-script@v6
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
         with:
           github-token: ${{ secrets.MEILCLI_BOT }}
