@@ -111,7 +111,7 @@ jobs:
           script: |
             github.rest.pulls.createReview(
               {
-                pull_number: context.issue.number,
+                pull_number: context.payload.pull_request.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 event: 'approve'
