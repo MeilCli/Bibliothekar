@@ -15,11 +15,12 @@ on:
 
 jobs:
   automerge:
-    if: (github.event.review.state == 'approved' || !github.event.review) && secrets.MEILCLI_BOT != ''
+    if: github.event.review.state == 'approved' || !github.event.review
     runs-on: ubuntu-latest
     steps:
       - uses: reitermarkus/automerge@v1
         continue-on-error: true
+        if: secrets.MEILCLI_BOT != ''
         with:
           token: ${{ secrets.MEILCLI_BOT }}
           merge-method: merge
