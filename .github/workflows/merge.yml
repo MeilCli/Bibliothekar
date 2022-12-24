@@ -18,11 +18,11 @@ jobs:
     if: github.event.review.state == 'approved' || !github.event.review
     runs-on: ubuntu-latest
     env:
-      token: ${{ secrets.MEILCLI_BOT }}
+      meilcli_bot: ${{ secrets.MEILCLI_BOT }}
     steps:
       - uses: reitermarkus/automerge@v1
         continue-on-error: true
-        if: env.token != ''
+        if: env.meilcli_bot != ''
         with:
           token: ${{ secrets.MEILCLI_BOT }}
           merge-method: merge
