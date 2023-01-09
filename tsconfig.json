@@ -13,5 +13,10 @@
     },
     "exclude": ["node_modules", "**/*.test.ts"],
     "files": [],
-    "references": [{ "path": "Transformer/NodeJs/core" }, { "path": "Transformer/NodeJs/cli" }]
+    "references": [
+        { "path": "Core/NodeJs/core" },
+        { "path": "Core/NodeJs/cli" },
+        { "path": "Transformer/NodeJs/core" },
+        { "path": "Transformer/NodeJs/cli" }
+    ]
 }

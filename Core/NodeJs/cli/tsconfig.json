@@ -5,10 +5,5 @@
         "rootDir": "src"
     },
     "include": ["src/**/*"],
-    "references": [
-        {
-            "path": "../../../Core/NodeJs/core"
-        }
-    ]
+    "references": []
 }
-

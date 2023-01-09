@@ -17,6 +17,7 @@
     "author": "MeilCli",
     "license": "MIT",
     "workspaces": [
+        "Core/NodeJs/*",
         "Transformer/NodeJs/*"
     ],
     "devDependencies": {

@@ -1,5 +1,5 @@
 {
-    "name": "bibliothekar-transformer-cli",
+    "name": "bibliothekar-core-cli",
     "version": "0.0.1",
     "description": "A tool of notice and verify licenses of dependencies",
     "keywords": [
@@ -13,7 +13,6 @@
         "lib"
     ],
     "scripts": {
-        "cli": "ts-node src/index.ts",
         "test": "jest"
     },
     "author": "MeilCli",
@@ -33,9 +32,5 @@
             "^.+\\.ts$": "ts-jest"
         },
         "verbose": true
-    },
-    "dependencies": {
-        "bibliothekar-core-cli": "^0.0.1",
-        "bibliothekar-transformer-core": "^0.0.1"
     }
 }
