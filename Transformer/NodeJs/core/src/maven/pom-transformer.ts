@@ -1,6 +1,6 @@
 import "../extensions";
+import { Notice, NoticeLicense } from "bibliothekar-core-core";
 import { Transformer } from "../transformer";
-import { Notice, NoticeLicense } from "../notice";
 import { Pom } from "./pom";
 
 export class PomTransformer implements Transformer<Pom> {
