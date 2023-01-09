@@ -30,6 +30,7 @@ export class PomTransformer implements Transformer<Pom> {
         return {
             packageId,
             groupId,
+            packageManagement: "maven",
             name,
             description,
             version,

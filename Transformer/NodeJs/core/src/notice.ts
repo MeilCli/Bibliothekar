@@ -1,6 +1,7 @@
 export interface Notice {
     packageId: string;
     groupId: string | null;
+    packageManagement: string | null;
     name: string | null;
     description: string | null;
     version: string | null;
