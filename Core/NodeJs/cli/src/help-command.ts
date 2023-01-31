@@ -7,7 +7,7 @@ export class HelpCommand extends Command {
     name = "help";
     description = "show help";
     subCommands: Command[] = [];
-    arguments: Argument<unknown>[] = [];
+    argumentList: Argument<unknown>[] = [];
 
     constructor(private target: Command | Command[]) {
         super();
@@ -24,11 +24,11 @@ export class HelpCommand extends Command {
     private showSingleCommand(command: Command, context: Context) {
         const commandText = context.commandCallings.slice(0, context.commandCallings.length - 1).join(" ");
         let postfix = "";
-        if (command.subCommands.length != 0 && command.arguments.length != 0) {
+        if (command.subCommands.length != 0 && command.argumentList.length != 0) {
             postfix = " [commands/options]";
         } else if (command.subCommands.length != 0) {
             postfix = " [commands]";
-        } else if (command.arguments.length != 0) {
+        } else if (command.argumentList.length != 0) {
             postfix = " [options]";
         }
         console.log(`Usage: ${commandText} ${postfix}`);
@@ -44,11 +44,11 @@ export class HelpCommand extends Command {
             pretttyLogger.execute();
         }
 
-        if (command.arguments.length != 0) {
+        if (command.argumentList.length != 0) {
             console.log();
             console.log("[options]");
             const prettyLogger = new PrettyLogger();
-            for (const argument of command.arguments) {
+            for (const argument of command.argumentList) {
                 const argumentKeywords = [argument.name, ...argument.aliases];
                 if (argument instanceof BooleanArgument) {
                     prettyLogger.add(`  ${argumentKeywords.join(" ")}`, argument.description);

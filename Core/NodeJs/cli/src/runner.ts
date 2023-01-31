@@ -34,7 +34,7 @@ export class Runner {
             }
         }
 
-        let required = command.arguments.filter((x) => x.required);
+        let required = command.argumentList.filter((x) => x.required);
 
         for (let i = 0; i < argumentList.length; i++) {
             const current = argumentList[i];
@@ -42,10 +42,10 @@ export class Runner {
             if (next?.startsWith("-")) {
                 next = undefined;
             }
-            const argument = command.arguments.find((x) => x.name == current || x.aliases.includes(current));
+            const argument = command.argumentList.find((x) => x.name == current || x.aliases.includes(current));
             if (argument != undefined) {
                 argument.parse(next);
-                required = required.filter((x) => x.name != current);
+                required = required.filter((x) => x.name != current && x.aliases.includes(current) == false);
                 if (next != undefined) {
                     i += 1;
                 }

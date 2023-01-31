@@ -5,7 +5,7 @@ export abstract class Command {
     abstract name: string;
     abstract description: string;
     abstract subCommands: Command[];
-    abstract arguments: Argument<unknown>[];
+    abstract argumentList: Argument<unknown>[];
 
     abstract execute(context: Context): void;
 }

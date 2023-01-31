@@ -6,7 +6,7 @@ import { Pom, PomReader, PomTransformer } from "bibliothekar-transformer-core";
 export class ShowCommand extends Command {
     name = "show";
     description = "show notice files";
-    arguments: Argument<unknown>[] = [];
+    argumentList: Argument<unknown>[] = [];
     subCommands: Command[] = [new HelpCommand(this)];
 
     execute(context: Context) {
