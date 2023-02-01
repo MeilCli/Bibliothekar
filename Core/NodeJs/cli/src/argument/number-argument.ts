@@ -14,9 +14,12 @@ export class NumberArgument implements Argument<number> {
     }
 
     parse(value: string | undefined) {
-        if (value == undefined || Number.isInteger(value) == false) {
+        if (value == undefined) {
             throw Error("value is not number");
         }
         this.value = Number.parseInt(value);
+        if (Number.isNaN(this.value)) {
+            throw Error("value is not number");
+        }
     }
 }
