@@ -14,9 +14,6 @@ export class BooleanArgument implements Argument<boolean> {
     }
 
     parse(value: string | undefined) {
-        if (value == undefined) {
-            this.value = true;
-        }
         switch (value) {
             case "true":
             case "t":
@@ -25,6 +22,9 @@ export class BooleanArgument implements Argument<boolean> {
             case "false":
             case "f":
                 this.value = false;
+                break;
+            case undefined:
+                this.value = true;
                 break;
         }
     }
