@@ -43,7 +43,7 @@ export class HelpCommand extends Command {
             console.log("[commands]");
             const pretttyLogger = new PrettyLogger();
             for (const subCommand of command.subCommands) {
-                pretttyLogger.add(`  ${subCommand.name}`, subCommand.description);
+                pretttyLogger.add(`  ${this.blueColor}${subCommand.name}${this.resetColor}`, subCommand.description);
             }
             pretttyLogger.execute();
         }
@@ -55,7 +55,7 @@ export class HelpCommand extends Command {
             for (const argument of command.argumentList) {
                 const argumentKeywords = [argument.name, ...argument.aliases];
                 const argumentKeywordText = argumentKeywords
-                    .map((x) => `${this.blueColor}${x}\u001b${this.resetColor}`)
+                    .map((x) => `${this.blueColor}${x}${this.resetColor}`)
                     .join(", ");
                 const uncountTexts = [this.blueColor, this.greenColor, this.resetColor];
                 if (argument instanceof BooleanArgument) {
