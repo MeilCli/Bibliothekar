@@ -9,6 +9,7 @@
         "test": "npm run build && npm run test --workspaces",
         "lint": "eslint **/src/**/*.ts",
         "lint:report": "eslint --output-file eslint_report.json --format json --ext .ts **/src/**/*.ts",
+        "link": "npm link -w Transformer/NodeJs/cli",
         "generate:guard": "npm run transformer:core:generate:guard && eslint --fix **/src/**/*.guard.ts",
         "reference": "workspaces-to-typescript-project-references",
         "transformer:cli": "npm run build && npm link -w Transformer/NodeJs/cli && npm run cli -w Transformer/NodeJs/cli",

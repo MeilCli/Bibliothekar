@@ -1,17 +1,21 @@
 {
-    "extends": "../../../tsconfig.json",
-    "compilerOptions": {
-        "outDir": "./lib",
-        "rootDir": "src"
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../../Core/NodeJs/cli"
     },
-    "include": ["src/**/*"],
-    "references": [
-        {
-            "path": "../../../Core/NodeJs/cli"
-        },
-        {
-            "path": "../core"
-        }
-    ]
+    {
+      "path": "../../../Core/NodeJs/core"
+    },
+    {
+      "path": "../core"
+    }
+  ]
 }
-

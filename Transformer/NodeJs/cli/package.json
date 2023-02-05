@@ -13,8 +13,11 @@
         "lib"
     ],
     "scripts": {
-        "cli": "ts-node src/index.ts",
+        "cli": "ts-node src/cli.ts",
         "test": "jest"
+    },
+    "bin": {
+        "bibliothekar-transformer": "lib/cli.js"
     },
     "author": "MeilCli",
     "license": "MIT",
@@ -36,6 +39,7 @@
     },
     "dependencies": {
         "bibliothekar-core-cli": "^0.0.1",
+        "bibliothekar-core-core": "^0.0.1",
         "bibliothekar-transformer-core": "^0.0.1"
     }
 }
