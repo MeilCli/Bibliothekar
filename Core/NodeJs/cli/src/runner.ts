@@ -8,7 +8,13 @@ export class Runner {
     constructor(private commands: Command[]) {}
 
     run() {
-        this.runWithArguments(process.argv.slice(2));
+        try {
+            this.runWithArguments(process.argv.slice(2));
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            }
+        }
     }
 
     runWithArguments(argumentList: string[]) {
@@ -53,14 +59,9 @@ export class Runner {
         }
 
         if (0 < required.length) {
-            console.error(`required arguments(${required.map((x) => x.name).join()})`);
-            return;
+            throw Error(`required arguments(${required.map((x) => x.name).join()})`);
         }
 
-        try {
-            command.execute(this.context);
-        } catch (error) {
-            console.error(error);
-        }
+        command.execute(this.context);
     }
 }
