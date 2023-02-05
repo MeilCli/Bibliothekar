@@ -53,9 +53,14 @@ export class Runner {
         }
 
         if (0 < required.length) {
-            throw Error(`required arguments(${required.map((x) => x.name).join()})`);
+            console.error(`required arguments(${required.map((x) => x.name).join()})`);
+            return;
         }
 
-        command.execute(this.context);
+        try {
+            command.execute(this.context);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
