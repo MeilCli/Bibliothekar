@@ -9,6 +9,10 @@ export class HelpCommand extends Command {
     subCommands: Command[] = [];
     argumentList: Argument<unknown>[] = [];
 
+    blueColor = "\u001b[36m";
+    greenColor = "\u001b[32m";
+    resetColor = "\u001b[0m";
+
     constructor(private target: Command | Command[]) {
         super();
     }
@@ -50,10 +54,18 @@ export class HelpCommand extends Command {
             const prettyLogger = new PrettyLogger();
             for (const argument of command.argumentList) {
                 const argumentKeywords = [argument.name, ...argument.aliases];
+                const argumentKeywordText = argumentKeywords
+                    .map((x) => `${this.blueColor}${x}\u001b${this.resetColor}`)
+                    .join(", ");
+                const uncountTexts = [this.blueColor, this.greenColor, this.resetColor];
                 if (argument instanceof BooleanArgument) {
-                    prettyLogger.add(`  ${argumentKeywords.join(" ")}`, argument.description);
+                    prettyLogger.add(`  ${argumentKeywordText}`, argument.description, uncountTexts);
                 } else {
-                    prettyLogger.add(`  ${argumentKeywords.join(" ")}  <value>`, argument.description);
+                    prettyLogger.add(
+                        `  ${argumentKeywordText}  ${this.greenColor}<value>${this.resetColor}`,
+                        argument.description,
+                        uncountTexts
+                    );
                 }
             }
             prettyLogger.execute();
@@ -64,7 +76,7 @@ export class HelpCommand extends Command {
         console.log("[commands]");
         const pretttyLogger = new PrettyLogger();
         for (const command of commands) {
-            pretttyLogger.add(`  ${command.name}`, command.description);
+            pretttyLogger.add(`  ${this.blueColor}${command.name}${this.resetColor}`, command.description);
         }
         pretttyLogger.execute();
     }
