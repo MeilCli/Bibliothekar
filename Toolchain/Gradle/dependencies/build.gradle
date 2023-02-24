@@ -19,7 +19,7 @@ dependencies {
     library 'org.jetbrains.kotlin:kotlin-bom'
     library 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     library 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    library 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
+    library 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0'
 
     library 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0'
     library 'io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0'
