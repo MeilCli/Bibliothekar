@@ -9,8 +9,6 @@
       <module name="Extractor.functionalTest" target="11" />
       <module name="Extractor.main" target="11" />
       <module name="Extractor.test" target="11" />
-      <module name="Toolchain-dependencies.main" target="11" />
-      <module name="Toolchain-dependencies.test" target="11" />
       <module name="Toolchain.android" target="11" />
       <module name="Toolchain.android.main" target="11" />
       <module name="Toolchain.android.test" target="11" />
