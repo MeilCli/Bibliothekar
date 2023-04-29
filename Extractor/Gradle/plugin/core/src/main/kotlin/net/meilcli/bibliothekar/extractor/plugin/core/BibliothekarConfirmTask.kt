@@ -38,7 +38,7 @@ open class BibliothekarConfirmTask : DefaultTask() {
             project.tasks.findByName(BibliothekarReportTask.taskName())
         }
 
-        check(reportTask != null) {
+        checkNotNull(reportTask) {
             "did not register reportTask"
         }
 

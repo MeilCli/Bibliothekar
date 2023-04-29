@@ -30,8 +30,8 @@ class DetektPlugin : Plugin<Project> {
         project.afterEvaluate {
             project.tasks
                 .named("check")
-                .configure {
-                    it.setDependsOn(it.dependsOn.filterNot { it is TaskProvider<*> && it.name == "detekt" })
+                .configure { task ->
+                    task.setDependsOn(task.dependsOn.filterNot { depends -> depends is TaskProvider<*> && depends.name == "detekt" })
                 }
         }
     }

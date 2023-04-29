@@ -13,7 +13,8 @@ class DependencyLoader : IDependencyLoader {
             .firstLevelModuleDependencies
             .filter { it.moduleVersion != "unspecified" }
             .flatMap { resolvedDependency ->
-                resolvedDependency.allModuleArtifacts.map { it.moduleVersion.id.toDependency() } + resolvedDependency.module.id.toDependency()
+                resolvedDependency.allModuleArtifacts.map { it.moduleVersion.id.toDependency() } +
+                    resolvedDependency.module.id.toDependency()
             }
             .toSet()
     }
