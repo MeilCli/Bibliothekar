@@ -35,7 +35,7 @@ dependencies {
 
     library 'io.mockk:mockk:1.13.5'
 
-    library 'androidx.test.ext:junit:1.1.4'
+    library 'androidx.test.ext:junit:1.1.5'
     library 'androidx.test.espresso:espresso-core:3.5.0'
 }
 
