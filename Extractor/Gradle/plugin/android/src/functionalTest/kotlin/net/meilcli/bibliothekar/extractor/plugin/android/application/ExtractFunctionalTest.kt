@@ -40,6 +40,7 @@ class ExtractFunctionalTest {
                     }
                     dependencies {
                         implementation 'junit:junit:4.13.2'
+                        implementation("com.soywiz.korlibs.klock:klock-android:4.0.3")
                     }
                 """.trimIndent()
             )
@@ -52,6 +53,9 @@ class ExtractFunctionalTest {
             val result = runner.build()
 
             assertNotNull("write\\s[1-9]\\soutputs\\sto".toRegex().find(result.output))
+            assert(result.output.isNotEmpty()){
+                result.output
+            }
         }
     }
 }

@@ -15,4 +15,5 @@ android {
 dependencies {
     implementation project(':android-library-child')
     implementation project(':jvm-child')
+    implementation("com.soywiz.korlibs.klock:klock-android:4.0.3")
 }

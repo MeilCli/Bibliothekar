@@ -12,10 +12,15 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ProjectDependency
+import org.gradle.api.attributes.Category
+import org.gradle.api.attributes.Usage
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
+import org.slf4j.LoggerFactory
 
 @Suppress("unused")
 class BibliothekarPlugin : Plugin<Project> {
 
+    private val logger = LoggerFactory.getLogger(BibliothekarPlugin::class.java)
     private fun dependencyListConfigurationName(configuration: Configuration): String {
         return "${configuration.name}DependenciesList"
     }
@@ -62,14 +67,30 @@ class BibliothekarPlugin : Plugin<Project> {
             ?.onVariants { variant ->
                 variant.runtimeConfiguration
                     .extendsFrom
-                    .filter { it.isCanBeResolved.not() }
+                    //.filter { it.isCanBeResolved.not() }
                     .forEach {
                         if (configurations.findByName(dependencyListConfigurationName(it)) != null) {
                             return@forEach
                         }
                         configurations.create(dependencyListConfigurationName(it)).apply {
                             it.dependencies.forEach { dependency ->
-                                dependencies.add(dependency)
+                                if (dependency !is ProjectDependency) {
+                                    dependencies.add(dependency)
+                                }
+                            }
+                            attributes {
+                                it.attribute(
+                                    Usage.USAGE_ATTRIBUTE,
+                                    objects.named(Usage::class.java, Usage.JAVA_RUNTIME)
+                                )
+                                it.attribute(
+                                    Category.CATEGORY_ATTRIBUTE,
+                                    objects.named(Category::class.java, Category.LIBRARY)
+                                )
+                                it.attribute(
+                                    KotlinPlatformType.attribute,
+                                    KotlinPlatformType.androidJvm
+                                )
                             }
                             isCanBeResolved = true
                         }
@@ -100,11 +121,14 @@ class BibliothekarPlugin : Plugin<Project> {
         project.extensions.findByType(AndroidComponentsExtension::class.java)
             ?.onVariants { variant ->
                 tasks.register(BibliothekarReportTask.taskName(variant.name), BibliothekarReportTask::class.java) { task ->
+                    logger.warn("registerrrr")
                     task.setup(this)
+                    logger.warn("setupped")
 
                     val dependencyConfigurations = variant.runtimeConfiguration
                         .extendsFrom
-                        .map { getDependencyDefinedConfiguration(it) }
+                        .mapNotNull { getDependencyDefinedConfiguration(it) }
+                    logger.warn("dependencyConfigurations")
 
                     task.dependsOn(dependencyConfigurations.map { BibliothekarExtractTask.taskName(it) })
 
@@ -156,12 +180,21 @@ class BibliothekarPlugin : Plugin<Project> {
             }
     }
 
-    private fun Project.getDependencyDefinedConfiguration(configuration: Configuration): Configuration {
+    private fun Project.getDependencyDefinedConfiguration(configuration: Configuration): Configuration? {
+        if(configurations.findByName(dependencyListConfigurationName(configuration))!=null){
+            return configurations.findByName(dependencyListConfigurationName(configuration))
+        }else {
+            logger.warn("resolvable ${configuration.name} configuration22222 cannot find")
+            return null
+        }
         if (configuration.isCanBeResolved) {
             return configuration
         }
-        return configurations.findByName("${configuration.name}DependenciesMetadata") // defined by Kotlin Plugin
+        val result = configurations.findByName("${configuration.name}DependenciesMetadata") // defined by Kotlin Plugin
             ?: configurations.findByName(dependencyListConfigurationName(configuration))
-            ?: throw BibliothekarException("resolvable ${configuration.name} configuration cannot find")
+        if (result == null) {
+            logger.warn("resolvable ${configuration.name} configuration cannot find")
+        }
+        return result
     }
 }
