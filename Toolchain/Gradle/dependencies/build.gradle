@@ -24,7 +24,7 @@ dependencies {
 
     library 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.1'
     library 'io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1'
-    library 'io.gitlab.arturbosch.detekt:detekt-api:1.23.0'
+    library 'io.gitlab.arturbosch.detekt:detekt-api:1.23.1'
     library 'io.gitlab.arturbosch.detekt:detekt-test:1.23.1'
     library 'toolchain-detekt-rule:Toolchain-detekt-rule'
 
