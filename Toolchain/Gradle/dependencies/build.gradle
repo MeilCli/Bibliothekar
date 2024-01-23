@@ -28,7 +28,7 @@ dependencies {
     library 'io.gitlab.arturbosch.detekt:detekt-test:1.23.4'
     library 'toolchain-detekt-rule:Toolchain-detekt-rule'
 
-    library 'com.android.tools.build:gradle:7.3.1'
+    library 'com.android.tools.build:gradle:8.2.2'
     library 'androidx.appcompat:appcompat:1.5.1'
 
     library 'junit:junit:4.13.2'
