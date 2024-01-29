@@ -24,7 +24,7 @@
     "devDependencies": {
         "@monorepo-utils/workspaces-to-typescript-project-references": "^2.10.4",
         "@types/jest": "^29.5.11",
-        "@types/node": "^18.16.3",
+        "@types/node": "^20.11.10",
         "@typescript-eslint/eslint-plugin": "^5.61.0",
         "@typescript-eslint/parser": "^5.62.0",
         "eslint": "^8.55.0",
