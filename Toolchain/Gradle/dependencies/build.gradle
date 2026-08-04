@@ -29,7 +29,7 @@ dependencies {
     library 'toolchain-detekt-rule:Toolchain-detekt-rule'
 
     library 'com.android.tools.build:gradle:7.3.1'
-    library 'androidx.appcompat:appcompat:1.5.1'
+    library 'androidx.appcompat:appcompat:1.6.1'
 
     library 'junit:junit:4.13.2'
 
